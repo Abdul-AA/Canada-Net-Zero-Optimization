@@ -21,29 +21,34 @@ def create_dataframe():
 
 df = create_dataframe()
 
-# Function to plot the data
-def plot_data(filtered_df):
-    # Plotting Generation (GWh)
-    fig = px.bar(filtered_df, x='Source', y='Generation (GWh)', color='Source', title='Generation by Source')
-    st.plotly_chart(fig)
-
-    # Plotting Emissions (MTCO2e)
-    fig = px.bar(filtered_df, x='Source', y='Emissions (MTCO2e)', color='Source', title='Emissions by Source')
-    st.plotly_chart(fig)
-
-    # Plotting Generation Cost (USD)
-    fig = px.bar(filtered_df, x='Source', y='Generation Cost (USD)', color='Source', title='Generation Cost by Source')
-    st.plotly_chart(fig)
+# Function to plot data in a given container
+def plot_data(container, filtered_df, y_column, title):
+    fig = px.bar(filtered_df, x='Source', y=y_column, color='Source', title=title)
+    container.plotly_chart(fig, use_container_width=True)
 
 # Main function to run the Streamlit app
 def main():
     st.title("Canada's Electricity Sector Transition to Net Zero: Model Results")
 
-    year_filter = st.selectbox('Select Year', df['Year'].unique())
+    # Sidebar for user inputs
+    year_filter = st.sidebar.selectbox('Select Year', df['Year'].unique())
     filtered_df = df[df['Year'] == year_filter]
 
-    st.header(f"Model Results for {year_filter}")
-    plot_data(filtered_df)
+    # Layout using containers and columns
+    col1, col2 = st.columns(2)
+
+    with col1:
+        plot_data(st, filtered_df, 'Generation (GWh)', 'Generation by Source (GWh)')
+
+    with col2:
+        plot_data(st, filtered_df, 'Emissions (MTCO2e)', 'Emissions by Source (MTCO2e)')
+
+    col3, col4 = st.columns(2)
+
+    with col3:
+        plot_data(st, filtered_df, 'Generation Cost (USD)', 'Generation Cost by Source (USD)')
+
+    # Add additional charts or content in columns as needed
 
 if __name__ == "__main__":
     main()
