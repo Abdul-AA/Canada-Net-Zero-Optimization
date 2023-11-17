@@ -37,7 +37,7 @@ def create_dataframe():
 
     return pd.concat([df_2025, df_2030, df_2035], ignore_index=True)
 
-
+df = create_dataframe()
 # Dashboard title
 st.title("Net Zero Emissions Dashboard")
 
@@ -54,21 +54,26 @@ total_cost = filtered_df['Cost (USD)'].sum()
 
 # Layout using containers and columns
 kpi1, kpi2 = st.columns(2)
-
 kpi1.metric("Total Emissions (MTCO2e)", f"{total_emission:.2f}")
 kpi2.metric("Total Cost (USD)", f"${total_cost:,.2f}")
 
-# Chart: Generation by Source
-fig = px.bar(filtered_df, x='Source', y='Generation (GWh)', title='Generation by Source')
-st.plotly_chart(fig)
+# Charts layout
+chart1, chart2, chart3 = st.columns(3)
+with chart1:
+    st.markdown("### Generation by Source")
+    fig1 = px.bar(filtered_df, x='Source', y='Generation (GWh)')
+    st.plotly_chart(fig1)
 
-# Chart: Emissions by Source
-fig = px.bar(filtered_df, x='Source', y='Emissions (MTCO2e)', title='Emissions by Source')
-st.plotly_chart(fig)
+with chart2:
+    st.markdown("### Emissions by Source")
+    fig2 = px.bar(filtered_df, x='Source', y='Emissions (MTCO2e)')
+    st.plotly_chart(fig2)
 
-# Chart: Cost by Source
-fig = px.bar(filtered_df, x='Source', y='Cost (USD)', title='Cost by Source')
-st.plotly_chart(fig)
+with chart3:
+    st.markdown("### Cost by Source")
+    fig3 = px.bar(filtered_df, x='Source', y='Cost (USD)')
+    st.plotly_chart(fig3)
 
-# Display the filtered data table
+# Detailed Data View
+st.markdown("### Detailed Data View")
 st.dataframe(filtered_df)
