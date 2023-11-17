@@ -61,7 +61,7 @@ kpi1.metric("Total Emissions (MTCO2e)", f"{total_emission:.2f}")
 kpi2.metric("Total Cost (USD)", f"${total_cost:,.2f}")
 
 # Charts layout
-chart1, chart2, chart3 = st.columns(3)
+chart1, chart2, chart3 = st.columns(2)
 with chart1:
     st.markdown("### Generation by Source")
     fig1 = px.bar(filtered_df, x='Source', y='Generation (GWh)', color='Source')
@@ -71,12 +71,14 @@ with chart2:
     st.markdown("### Emissions by Source")
     fig2 = px.bar(filtered_df, x='Source', y='Emissions (MTCO2e)', color='Source')
     st.plotly_chart(fig2)
-
-with chart3:
+col1, col2 = st.columns(2)
+with col1:
     st.markdown("### Cost by Source")
     fig3 = px.bar(filtered_df, x='Source', y='Cost (USD)', color='Source')
     st.plotly_chart(fig3)
+with col2:
+    st.markdown("### Detailed Data View")
+    st.dataframe(filtered_df)
 
 # Detailed Data View
-st.markdown("### Detailed Data View")
-st.dataframe(filtered_df)
+
