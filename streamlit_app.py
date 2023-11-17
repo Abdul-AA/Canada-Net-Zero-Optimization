@@ -63,19 +63,16 @@ kpi2.metric("Total Cost (USD)", f"${total_cost:,.2f}")
 chart1, chart2, chart3 = st.columns(3)
 with chart1:
     st.markdown("### Generation by Source")
-    plt.figure(figsize=(15,20))
     fig1 = px.bar(filtered_df, x='Source', y='Generation (GWh)')
     st.plotly_chart(fig1)
 
 with chart2:
     st.markdown("### Emissions by Source")
-    plt.figure(figsize=(15,20))
     fig2 = px.bar(filtered_df, x='Source', y='Emissions (MTCO2e)')
     st.plotly_chart(fig2)
 
 with chart3:
     st.markdown("### Cost by Source")
-    plt.figure(figsize=(15,20))
     fig3 = px.bar(filtered_df, x='Source', y='Cost (USD)')
     st.plotly_chart(fig3)
 
