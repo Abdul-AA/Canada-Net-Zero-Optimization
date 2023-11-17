@@ -41,12 +41,16 @@ df = create_dataframe()
 #  Dashboard title
 st.title("Net Zero Emissions Dashboard")
 
-# Sidebar for filters
-year_filter = st.sidebar.selectbox("Select the Year", df['Year'].unique())
+year_filter = st.sidebar.selectbox("Select the Year", ['All Years'] + list(df['Year'].unique()))
+view_all_years = year_filter == 'All Years'
 source_filter = st.sidebar.multiselect("Select Energy Sources", df['Source'].unique(), default=df['Source'].unique())
 
 # Filter the dataframe
-filtered_df = df[(df['Year'] == year_filter) & (df['Source'].isin(source_filter))]
+if not view_all_years:
+    filtered_df = df[(df['Year'] == year_filter) & (df['Source'].isin(source_filter))]
+else:
+    filtered_df = df[df['Source'].isin(source_filter)]
+
 
 # KPIs
 total_emission = filtered_df['Emissions (MTCO2e)'].sum()
