@@ -44,8 +44,8 @@ df = create_dataframe()
 st.title("Net Zero Emissions Dashboard")
 
 # Sidebar for filters
-year_filter = st.sidebar.selectbox("Select the Year", df['Year'].unique())
-source_filter = st.sidebar.multiselect("Select Energy Sources", df['Source'].unique(), default=df['Source'].unique())
+year_filter = st.selectbox("Select the Year", df['Year'].unique())
+source_filter = st.multiselect("Select Energy Sources", df['Source'].unique(), default=df['Source'].unique())
 
 # Filter the dataframe
 filtered_df = df[(df['Year'] == year_filter) & (df['Source'].isin(source_filter))]
