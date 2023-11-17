@@ -42,11 +42,15 @@ df = create_dataframe()
 st.title("Net Zero Emissions Dashboard")
 
 # Sidebar for filters
-year_filter = st.sidebar.selectbox("Select the Year", df['Year'].unique())
+year_filter = st.sidebar.selectbox("Select the Year", ['All Years'] + list(df['Year'].unique()))
+view_all_years = year_filter == 'All Years'
 source_filter = st.sidebar.multiselect("Select Energy Sources", df['Source'].unique(), default=df['Source'].unique())
 
 # Filter the dataframe
-filtered_df = df[(df['Year'] == year_filter) & (df['Source'].isin(source_filter))]
+if not view_all_years:
+    filtered_df = df[(df['Year'] == year_filter) & (df['Source'].isin(source_filter))]
+else:
+    filtered_df = df[df['Source'].isin(source_filter)]
 
 # KPIs
 total_emission = filtered_df['Emissions (MTCO2e)'].sum()
@@ -61,17 +65,17 @@ kpi2.metric("Total Cost (USD)", f"${total_cost:,.2f}")
 chart1, chart2, chart3 = st.columns(3)
 with chart1:
     st.markdown("### Generation by Source")
-    fig1 = px.bar(filtered_df, x='Source', y='Generation (GWh)')
+    fig1 = px.bar(filtered_df, x='Source', y='Generation (GWh)', color='Year')
     st.plotly_chart(fig1)
 
 with chart2:
     st.markdown("### Emissions by Source")
-    fig2 = px.bar(filtered_df, x='Source', y='Emissions (MTCO2e)')
+    fig2 = px.bar(filtered_df, x='Source', y='Emissions (MTCO2e)', color='Year')
     st.plotly_chart(fig2)
 
 with chart3:
     st.markdown("### Cost by Source")
-    fig3 = px.bar(filtered_df, x='Source', y='Cost (USD)')
+    fig3 = px.bar(filtered_df, x='Source', y='Cost (USD)', color='Year')
     st.plotly_chart(fig3)
 
 # Detailed Data View
