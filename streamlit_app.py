@@ -61,7 +61,7 @@ kpi1.metric("Total Emissions (MTCO2e)", f"{total_emission:.2f}")
 kpi2.metric("Total Cost (USD)", f"${total_cost:,.2f}")
 
 # Charts layout
-chart1, chart2, chart3 = st.columns(2)
+chart1, chart2 = st.columns(2)
 with chart1:
     st.markdown("### Generation by Source")
     fig1 = px.bar(filtered_df, x='Source', y='Generation (GWh)', color='Source')
