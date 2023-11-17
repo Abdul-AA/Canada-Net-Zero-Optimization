@@ -75,12 +75,6 @@ with chart3:
     st.markdown("### Cost by Source")
     fig3 = px.bar(filtered_df, x='Source', y='Cost (USD)')
     st.plotly_chart(fig3)
-
-col1, col2 = st.columns(2)  # Adjust the ratio based on how much space you want for the image and the data
-with col1:
 # Detailed Data View
-    st.markdown("### Detailed Data View")
-    st.dataframe(filtered_df)
-with col2:
-    image = Image.open('green.png')  # Replace with the path to your image
-    st.image(image, caption='Net Zero Emissions')
+st.markdown("### Detailed Data View")
+st.dataframe(filtered_df)
