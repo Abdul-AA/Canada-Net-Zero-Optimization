@@ -2,7 +2,7 @@ import streamlit as st
 import plotly.express as px
 import pandas as pd
 import matplotlib.pyplot as plt
-
+from PIL import Image
 # Set page config
 st.set_page_config(page_title="Net Zero Emissions Dashboard", page_icon="🌍", layout="wide")
 
