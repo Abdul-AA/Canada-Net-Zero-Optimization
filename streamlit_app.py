@@ -76,10 +76,6 @@ with chart3:
     fig3 = px.bar(filtered_df, x='Source', y='Cost (USD)')
     st.plotly_chart(fig3)
 
-# Detailed Data View
-st.markdown("### Detailed Data View")
-st.dataframe(filtered_df)
-
 col1, col2 = st.columns(2)  # Adjust the ratio based on how much space you want for the image and the data
 with col1:
 # Detailed Data View
