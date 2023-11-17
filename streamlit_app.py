@@ -2,17 +2,24 @@ import streamlit as st
 import plotly.express as px
 import pandas as pd
 
-# Sample data: Rearranged to ensure each source per year is a separate row
-data = {
-    'Year': [2025]*8 + [2030]*8 + [2035]*8,
-    'Source': ['Wind', 'Solar', 'Oil', 'Nuclear', 'Hydro', 'Natural Gas', 'Coal & Coke', 'Biomass & Geothermal']*3,
-    'Generation (GWh)': [64389.48, 12184.23, 1379.91, 78631.37, 402575.9, 100603.82, 0.0, 8281.2] * 3,
-    'Emissions (MTCO2e)': [0.0, 0.0, 0.5105667, 0.0, 0.0, 37.223413472479834, 0.0, 0.0] * 3,
-    'Generation Cost (USD)': [3798979320.0, 1827634470.6162817, 62095950.0, 5111039050.0, 8856669800.0, 7142871233.908293, 0.0, 496872000.00000006] * 3
-}
+# Data Preparation
+def create_dataframe():
+    data = {
+        'Year': [2025] * 8 + [2030] * 8 + [2035] * 8,
+        'Source': ['Wind', 'Solar', 'Oil', 'Nuclear', 'Hydro', 'Natural Gas', 'Coal & Coke', 'Biomass & Geothermal'] * 3,
+        'Generation (GWh)': [64389.48, 12184.23, 1379.91, 78631.37, 402575.9, 100603.82, 0.0, 8281.2,
+                             151989.48, 0.0, 1379.91, 174991.37, 402575.9, 30810.47, 0.0, 8281.2,
+                             195789.48, 8357.67, 0.0, 271351.37, 402575.9, 0.0, 0.0, 8281.2],
+        'Emissions (MTCO2e)': [0.0, 0.0, 0.5105667, 0.0, 0.0, 37.223413472479834, 0.0, 0.0,
+                               0.0, 0.0, 0.5105667, 0.0, 0.0, 11.399873899999957, 0.0, 0.0,
+                               0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+        'Generation Cost (USD)': [3798979320.0, 1827634470.6162817, 62095950.0, 5111039050.0, 8856669800.0, 7142871233.908293, 0.0, 496872000.00000006,
+                                  8967379320.000002, 0.0, 62095950.0, 11374439050.0, 8856669800.0, 2187543369.999992, 0.0, 496872000.00000006,
+                                  11551579320.0, 1253650499.9999976, 0.0, 17637839050.0, 8856669800.0, 0.0, 0.0, 496872000.00000006]
+    }
+    return pd.DataFrame(data)
 
-# Convert the data into a DataFrame
-df = pd.DataFrame(data)
+df = create_dataframe()
 
 # Function to plot the data
 def plot_data(filtered_df):
@@ -38,6 +45,5 @@ def main():
     st.header(f"Model Results for {year_filter}")
     plot_data(filtered_df)
 
-# Run the main function
 if __name__ == "__main__":
     main()
