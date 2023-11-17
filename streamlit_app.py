@@ -1,11 +1,11 @@
 import streamlit as st
 import plotly.express as px
 import pandas as pd
-import matplotlib.pyplot as plt
-from PIL import Image
+
 # Set page config
 st.set_page_config(page_title="Net Zero Emissions Dashboard", page_icon="🌍", layout="wide")
 
+# Function to create and preprocess DataFrame
 def create_dataframe():
     data_2025 = {
         'Year': [2025] * 8,
@@ -36,22 +36,20 @@ def create_dataframe():
     df_2030 = pd.DataFrame(data_2030)
     df_2035 = pd.DataFrame(data_2035)
 
-    combined_df = pd.concat([pd.DataFrame(data) for data in [data_2025, data_2030, data_2035]], ignore_index=True)
-    combined_df['Year'] = pd.to_datetime(combined_df['Year'], format='%Y')
-    return combined_df
+    return pd.concat([df_2025, df_2030, df_2035], ignore_index=True)
 
 df = create_dataframe()
-
-# Set page config
 
 # Dashboard title
 st.title("Net Zero Emissions Dashboard")
 
 # Sidebar for filters
-year_filter = st.sidebar.selectbox("Select the Year", pd.to_datetime(df['Year'].dt.year.unique(), format='%Y'))
-
-# Filter the dataframe
-filtered_df = df[df['Year'].dt.year == year_filter.year]
+year_options = ['All'] + sorted(df['Year'].unique().tolist())
+year_filter = st.sidebar.selectbox("Select the Year", options=year_options)
+if year_filter == 'All':
+    filtered_df = df
+else:
+    filtered_df = df[df['Year'] == year_filter]
 
 # KPIs
 total_emission = filtered_df['Emissions (MTCO2e)'].sum()
@@ -81,5 +79,4 @@ with chart3:
 
 # Detailed Data View
 st.markdown("### Detailed Data View")
-filtered_df.set_index('Year', inplace=True)
 st.dataframe(filtered_df)
