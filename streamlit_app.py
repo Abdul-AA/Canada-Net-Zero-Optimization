@@ -39,13 +39,7 @@ def create_dataframe():
 
 df = create_dataframe()
 # Dashboard title
-# Dashboard title
-
-
-
-
-
-# Dashboard title
+st.title("Net Zero Emissions Dashboard")
 st.title("Net Zero Emissions Dashboard")
 
 # Sidebar for filters
