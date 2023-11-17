@@ -43,7 +43,6 @@ def create_dataframe():
 df = create_dataframe()
 
 # Set page config
-st.set_page_config(page_title="Net Zero Emissions Dashboard", page_icon="🌍", layout="wide")
 
 # Dashboard title
 st.title("Net Zero Emissions Dashboard")
