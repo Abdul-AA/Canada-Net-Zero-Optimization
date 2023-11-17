@@ -79,3 +79,8 @@ with chart3:
 # Detailed Data View
 st.markdown("### Detailed Data View")
 st.dataframe(filtered_df)
+
+col1, col2 = st.columns([1, 4])  # Adjust the ratio based on how much space you want for the image and the data
+with col1:
+    image = Image.open('green.jpeg')  # Replace with the path to your image
+    st.image(image, caption='Net Zero Emissions')
