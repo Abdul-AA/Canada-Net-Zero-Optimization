@@ -36,19 +36,23 @@ def create_dataframe():
     df_2030 = pd.DataFrame(data_2030)
     df_2035 = pd.DataFrame(data_2035)
 
-    return pd.concat([df_2025, df_2030, df_2035], ignore_index=True)
+    combined_df = pd.concat([pd.DataFrame(data) for data in [data_2025, data_2030, data_2035]], ignore_index=True)
+    combined_df['Year'] = pd.to_datetime(combined_df['Year'], format='%Y')
+    return combined_df
 
 df = create_dataframe()
+
+# Set page config
+st.set_page_config(page_title="Net Zero Emissions Dashboard", page_icon="🌍", layout="wide")
 
 # Dashboard title
 st.title("Net Zero Emissions Dashboard")
 
 # Sidebar for filters
-year_filter = st.selectbox("Select the Year", df['Year'].unique())
-source_filter = st.multiselect("Select Energy Sources", df['Source'].unique(), default=df['Source'].unique())
+year_filter = st.sidebar.selectbox("Select the Year", pd.to_datetime(df['Year'].dt.year.unique(), format='%Y'))
 
 # Filter the dataframe
-filtered_df = df[(df['Year'] == year_filter) & (df['Source'].isin(source_filter))]
+filtered_df = df[df['Year'].dt.year == year_filter.year]
 
 # KPIs
 total_emission = filtered_df['Emissions (MTCO2e)'].sum()
@@ -63,18 +67,20 @@ kpi2.metric("Total Cost (USD)", f"${total_cost:,.2f}")
 chart1, chart2, chart3 = st.columns(3)
 with chart1:
     st.markdown("### Generation by Source")
-    fig1 = px.bar(filtered_df, x='Source', y='Generation (GWh)')
+    fig1 = px.bar(filtered_df, x='Source', y='Generation (GWh)', color='Source')
     st.plotly_chart(fig1)
 
 with chart2:
     st.markdown("### Emissions by Source")
-    fig2 = px.bar(filtered_df, x='Source', y='Emissions (MTCO2e)')
+    fig2 = px.bar(filtered_df, x='Source', y='Emissions (MTCO2e)', color='Source')
     st.plotly_chart(fig2)
 
 with chart3:
     st.markdown("### Cost by Source")
-    fig3 = px.bar(filtered_df, x='Source', y='Cost (USD)')
+    fig3 = px.bar(filtered_df, x='Source', y='Cost (USD)', color='Source')
     st.plotly_chart(fig3)
+
 # Detailed Data View
 st.markdown("### Detailed Data View")
+filtered_df.set_index('Year', inplace=True)
 st.dataframe(filtered_df)
