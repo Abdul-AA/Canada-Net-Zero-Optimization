@@ -45,7 +45,7 @@ st.title("Net Zero Emissions Dashboard")
 
 # Sidebar for filters
 year_options = ['All'] + sorted(df['Year'].unique().tolist())
-year_filter = st.sidebar.selectbox("Select the Year", options=year_options)
+year_filter = st.selectbox("Select the Year", options=year_options)
 if year_filter == 'All':
     filtered_df = df
 else:
