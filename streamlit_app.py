@@ -127,46 +127,63 @@ deviations = {2025: 0.0, 2030: 0.0, 2035: 1e-06}
 
 
     
-with tab2:
-        st.title("Power Plant Decisions and Impacts")
+import streamlit as st
+import pandas as pd
 
-        # Year filter with 'All' option
-        year_options = ['All', 2025, 2030, 2035]
-        selected_year = st.selectbox("Select Year", options=year_options)
+# Start of your Streamlit app
 
-        # Data setup for capacity increase decisions and capacities added
-        capacity_decision = {
-            'Wind': [(0.0, 0.0), (1.0, 1.0), (1.0, 1.0)],
-            'Solar': [(0.0, 0.0), (0.0, 0.0), (0.0, 0.0)],
-            'Nuclear': [(0.0, 0.0), (1.0, 0.0), (0.0, 0.0)]
-        }
-        capacity_added = {
-            'Wind': [0.0, 87600.0*2, 87600.0*2],
-            'Solar': [0.0, 0.0, 0.0],
-            'Nuclear': [0.0, 48180.0, 0.0]
-        }
-        cost_per_unit = {
-            'Wind': [0.0, 1000.0, 1000.0],
-            'Solar': [0.0, 0.0, 0.0],
-            'Nuclear': [0.0, 2000.0, 2000.0]
-        }
+# Tab 2 Content
+with st.container() as tab2:
+    st.title("Power Plant Decisions and Impacts")
 
-        # Display the results using columns and metrics
-        col1, col2 = st.columns(2)
-        for source in ['Wind', 'Solar', 'Nuclear']:
-            for idx, year in enumerate(year_options[1:]):  # Exclude 'All'
-                decision_1, decision_2 = capacity_decision[source][idx]
-                total_capacity = capacity_added[source][idx]
-                total_cost = total_capacity * cost_per_unit[source][idx]
+    # Year filter with 'All' option
+    year_options = ['All', 2025, 2030, 2035]
+    selected_year = st.selectbox("Select Year", options=year_options)
 
-                with col1:
-                    st.metric(label=f"{year} {source} Decisions", value=f"{'Yes' if decision_1 else 'No'} & {'Yes' if decision_2 else 'No'}")
-                    st.metric(label=f"Total Capacity Added (GWh)", value=f"{total_capacity}")
-                
-                with col2:
-                    st.metric(label=f"Total Cost (CAD)", value=f"${total_cost:,.2f}")
+    # Cost per unit for each increase
+    increase_cost = {
+        'Nuclear': 9.59e9, 
+        'Solar': 12.878e9, 
+        'Wind': 4.11e9
+    }
 
-        # Emission Deviations using metrics
-        st.markdown("## Emission Deviations from Goals")
-        for idx, year in enumerate(year_options[1:]):
-            st.metric(label=f"{year} Emission Deviation", value=f"{emission_deviations[idx]} MTCO2e")
+    # Capacity increase amounts for each power plant type (GWh)
+    capacity_added = {
+        'Nuclear': 48180, 
+        'Solar': 139809.6, 
+        'Wind': 43800
+    }
+
+    # Capacity increase decisions
+    capacity_decision = {
+        'Wind': [0, 2, 2],
+        'Solar': [0, 0, 0],
+        'Nuclear': [0, 1, 0]
+    }
+
+    # Emission deviations
+    emission_deviations = [0.0, 0.0, 1.0001e-06]
+
+    # Display the results using columns and metrics
+    col1, col2 = st.columns(2)
+    for source in ['Wind', 'Solar', 'Nuclear']:
+        if selected_year != 'All':
+            idx = year_options.index(selected_year) - 1
+            num_decisions = capacity_decision[source][idx]
+            total_capacity = capacity_added[source] * num_decisions
+            total_cost = increase_cost[source] * num_decisions
+
+            with col1:
+                st.metric(label=f"{selected_year} {source} Capacity Increases", value=f"{num_decisions}")
+                st.metric(label=f"Total Capacity Added (GWh)", value=f"{total_capacity}")
+            
+            with col2:
+                st.metric(label=f"Total Cost (CAD)", value=f"${total_cost:,.2f}")
+
+            if selected_year != 'All':
+                st.metric(label=f"{selected_year} Emission Deviation", value=f"{emission_deviations[idx]} MTCO2e")
+        else:
+            # Logic for 'All' option
+            pass
+
+# Rest of your Streamlit app (other tabs or content) goes here
