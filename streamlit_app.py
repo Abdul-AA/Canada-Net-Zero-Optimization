@@ -128,7 +128,7 @@ deviations = {2025: 0.0, 2030: 0.0, 2035: 1e-06}
 
 
 
-with st.container() as tab2:
+with tab2:
     st.title("Power Plant Decisions and Impacts")
 
     # Year filter with 'All' option
@@ -215,7 +215,7 @@ with st.container() as tab2:
 
         with col3:
             st.metric(label="Total Emission Deviation", value=f"{total_deviation} MTCO2e")
-            st.image("image.png", use_column_width=True)
+            
 
 # Run the Streamlit app (uncomment this line if running the script directly)
 # st.run()
