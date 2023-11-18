@@ -79,8 +79,8 @@ with tab1:
     # Total emission deviation KPI
     deviation = filtered_df['Emission Deviation'].iloc[0]
     deviation_color = "green" if deviation == 0 else "red"
-    st.metric("Total Emission Deviation", f"{deviation:.2f}", delta_color=deviation_color)
-
+    st.write("Total Emission Deviation:", f"<span style='color: {deviation_color};'>{deviation:.2f}</span>", unsafe_allow_html=True)
+    
 with tab2:
     # Capacity Decisions & Emissions
     year_filter = st.selectbox("Select the Year", options=df['Year'].unique(), key='year2')
