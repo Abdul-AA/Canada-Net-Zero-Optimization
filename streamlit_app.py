@@ -11,35 +11,36 @@ def create_dataframe_updated():
     data_2025 = {
         'Year': [2025] * 8,
         'Source': ['Wind', 'Solar', 'Oil', 'Nuclear', 'Hydro', 'Natural Gas', 'Coal & Coke', 'Biomass & Geothermal'],
-        'Generation (GWh)': [64389.48, 0.0, 1379.91, 78631.37, 402575.9, 48364.54, 8184.54, 8281.2],
-        'Emissions (MTCO2e)': [0.0, 0.0, 0.5105667, 0.0, 0.0, 17.8948798, 6.2202504, 0.0],
-        'Generation Cost (CAD)': [5204601668.4, 0.0, 85071451.5, 7002123498.5, 12133637626.0, 4704418805.8, 683982007.8, 680714640.0],
-        'Capacity Investment Cost (CAD)':[0,0,0,0,0,0,0,0]
+        'Generation (GWh)': [64389.48, 0.0, 1379.91, 50079.20, 402575.9, 76916.71, 8184.54, 8281.2],
+        'Emissions (MTCO2e)': [0.0, 0.0, 0.5105667, 0.0, 0.0, 28.4591829, 6.2202504, 0.0],
+        'Generation Cost (CAD)': [5204601668.4, 0.0, 85071451.5, 4459552711.86, 12133637626.0, 7481688434.28, 683982007.8, 680714640.0],
+        'Capacity Investment Cost (CAD)': [0, 0, 0, 0, 0, 0, 0, 0]
     }
-
+    
     data_2030 = {
         'Year': [2030] * 8,
         'Source': ['Wind', 'Solar', 'Oil', 'Nuclear', 'Hydro', 'Natural Gas', 'Coal & Coke', 'Biomass & Geothermal'],
-        'Generation (GWh)': [151989.48, 0.0, 1379.91, 126811.37, 402575.9, 3368.82, 0.0, 8281.2],
-        'Emissions (MTCO2e)': [0.0, 0.0, 0.5105667, 0.0, 0.0, 1.2464634, 0.0, 0.0],
-        'Generation Cost (CAD)': [12285309668.4, 0.0, 85071451.5, 11292552498.5, 12133637626.0, 327685121.4, 0.0, 680714640.0],
-        'Capacity Investment Cost (CAD)':[8220000000.0,0,0,9590000000.00,0,0,0,0]
-        
+        'Generation (GWh)': [151989.48, 0.0, 1379.91, 53479.02, 402575.9, 76701.17, 0.0, 8281.2],
+        'Emissions (MTCO2e)': [0.0, 0.0, 0.5105667, 0.0, 0.0, 28.3794333, 0.0, 0.0],
+        'Generation Cost (CAD)': [12285309668.4, 0.0, 85071451.5, 4762306634.73, 12133637626.0, 7460722911.06, 0.0, 680714640.0],
+        'Capacity Investment Cost (CAD)': [8220000000.0, 0, 0, 9590000000.0, 0, 0, 0, 0]
     }
-
+    
     data_2035 = {
         'Year': [2035] * 8,
         'Source': ['Wind', 'Solar', 'Oil', 'Nuclear', 'Hydro', 'Natural Gas', 'Coal & Coke', 'Biomass & Geothermal'],
         'Generation (GWh)': [239589.48, 10583.16, 0.0, 126811.37, 402575.9, 0.0027, 0.0, 8281.2],
         'Emissions (MTCO2e)': [0.0, 0.0, 0.0, 0.0, 0.0, 1e-06, 0.0, 0.0],
         'Generation Cost (CAD)': [19366017668.4, 2174838824.54, 0.0, 11292552498.5, 12133637626.0, 262.92, 0.0, 680714640.0],
-        'Capacity Investment Cost (CAD)':[8220000000.0,0,0,0,0,0,0,0]
+        'Capacity Investment Cost (CAD)': [8220000000.0, 0, 0, 0, 0, 0, 0, 0]
     }
 
-    # Combine all data into one DataFrame
+# Combine all data into one DataFrame
     df_2025 = pd.DataFrame(data_2025)
     df_2030 = pd.DataFrame(data_2030)
     df_2035 = pd.DataFrame(data_2035)
+    
+    
 
     return pd.concat([df_2025, df_2030, df_2035], ignore_index=True)
 
