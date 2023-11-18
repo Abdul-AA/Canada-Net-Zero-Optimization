@@ -23,7 +23,7 @@ def create_dataframe_updated():
         'Generation (GWh)': [151989.48, 0.0, 1379.91, 126811.37, 402575.9, 3368.82, 0.0, 8281.2],
         'Emissions (MTCO2e)': [0.0, 0.0, 0.5105667, 0.0, 0.0, 1.2464634, 0.0, 0.0],
         'Generation Cost (CAD)': [12285309668.4, 0.0, 85071451.5, 11292552498.5, 12133637626.0, 327685121.4, 0.0, 680714640.0],
-        'Capacicity Investment Cost (CAD)':[8220000000.0,0,0,9590000000.00,0,0,0,0]
+        'Capacity Investment Cost (CAD)':[8220000000.0,0,0,9590000000.00,0,0,0,0]
         
     }
 
@@ -33,7 +33,7 @@ def create_dataframe_updated():
         'Generation (GWh)': [239589.48, 10583.16, 0.0, 126811.37, 402575.9, 0.0027, 0.0, 8281.2],
         'Emissions (MTCO2e)': [0.0, 0.0, 0.0, 0.0, 0.0, 1e-06, 0.0, 0.0],
         'Generation Cost (CAD)': [19366017668.4, 2174838824.54, 0.0, 11292552498.5, 12133637626.0, 262.92, 0.0, 680714640.0],
-        'Capacicity Investment Cost (CAD)':[8220000000.0,0,0,0,0,0,0,0]
+        'Capacity Investment Cost (CAD)':[8220000000.0,0,0,0,0,0,0,0]
     }
 
     # Combine all data into one DataFrame
