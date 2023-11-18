@@ -128,7 +128,7 @@ deviations = {2025: 0.0, 2030: 0.0, 2035: 1e-06}
 
     
 with tab2:
-    st.title("Power Plant Decisions and Impacts")
+        st.title("Power Plant Decisions and Impacts")
 
         # Year filter with 'All' option
         year_options = ['All', 2025, 2030, 2035]
@@ -170,9 +170,3 @@ with tab2:
         st.markdown("## Emission Deviations from Goals")
         for idx, year in enumerate(year_options[1:]):
             st.metric(label=f"{year} Emission Deviation", value=f"{emission_deviations[idx]} MTCO2e")
-
-
-    
-
-
-        
