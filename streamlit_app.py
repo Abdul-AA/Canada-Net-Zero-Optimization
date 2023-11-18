@@ -124,77 +124,58 @@ deviations = {2025: 0.0, 2030: 0.0, 2035: 1e-06}
 
 
 
-# Tab 2 Content
-with tab2:
-    st.title("Power Plant Decisions and Impacts")
 
-    # Year filter with 'All' option
-    year_options = ['All', 2025, 2030, 2035]
-    selected_year = st.selectbox("Select Year", options=year_options)
 
-    # Top section containers for decisions and capacities
-    top_left, top_right = st.columns(2)
+def main():
+    tab2 = st.container()
+    
+    with tab2:
+        st.title("Power Plant Decisions and Impacts")
 
-    # Bottom section containers for costs and emission deviation
-    bottom_left, bottom_right = st.columns(2)
+        # Year filter with 'All' option
+        year_options = ['All', 2025, 2030, 2035]
+        selected_year = st.selectbox("Select Year", options=year_options)
 
-    if selected_year == 'All':
-        agg_capacities, agg_costs = aggregate_data(capacities, costs)
+        # Data setup for capacity increase decisions and capacities added
+        capacity_decision = {
+            'Wind': [(0.0, 0.0), (1.0, 1.0), (1.0, 1.0)],
+            'Solar': [(0.0, 0.0), (0.0, 0.0), (0.0, 0.0)],
+            'Nuclear': [(0.0, 0.0), (1.0, 0.0), (0.0, 0.0)]
+        }
+        capacity_added = {
+            'Wind': [0.0, 87600.0*2, 87600.0*2],
+            'Solar': [0.0, 0.0, 0.0],
+            'Nuclear': [0.0, 48180.0, 0.0]
+        }
+        cost_per_unit = {
+            'Wind': [0.0, 1000.0, 1000.0],
+            'Solar': [0.0, 0.0, 0.0],
+            'Nuclear': [0.0, 2000.0, 2000.0]
+        }
 
-        with top_left:
-            st.subheader("Power Plant Opening Decisions Across All Years")
-            for year, year_decisions in decisions.items():
-                st.markdown(f"#### Year {year}")
-                for source, opened in year_decisions.items():
-                    st.markdown(f"{format_source(source)} Power Plant Opened: {format_decision(opened)}", unsafe_allow_html=True)
+        # Display the results using columns and metrics
+        col1, col2 = st.columns(2)
+        for source in ['Wind', 'Solar', 'Nuclear']:
+            for idx, year in enumerate(year_options[1:]):  # Exclude 'All'
+                decision_1, decision_2 = capacity_decision[source][idx]
+                total_capacity = capacity_added[source][idx]
+                total_cost = total_capacity * cost_per_unit[source][idx]
 
-        with top_right:
-            st.subheader("Aggregated Added Capacities Across All Years")
-            for source, capacity in agg_capacities.items():
-                st.metric(label=f"{source} Capacity (GWh)", value=f"{capacity}")
+                with col1:
+                    st.metric(label=f"{year} {source} Decisions", value=f"{'Yes' if decision_1 else 'No'} & {'Yes' if decision_2 else 'No'}")
+                    st.metric(label=f"Total Capacity Added (GWh)", value=f"{total_capacity}")
+                
+                with col2:
+                    st.metric(label=f"Total Cost (CAD)", value=f"${total_cost:,.2f}")
 
-        with bottom_left:
-            st.subheader("Aggregated Associated Costs Across All Years")
-            for source, cost in agg_costs.items():
-                st.metric(label=f"{source} Cost (CAD)", value=f"${cost:,.2f}")
+        # Emission Deviations using metrics
+        st.markdown("## Emission Deviations from Goals")
+        for idx, year in enumerate(year_options[1:]):
+            st.metric(label=f"{year} Emission Deviation", value=f"{emission_deviations[idx]} MTCO2e")
 
-        with bottom_right:
-            st.subheader("Emission Deviations Across All Years")
-            for year, deviation in deviations.items():
-                st.metric(label=f"{year} Emission Deviation", value=f"{deviation} MTCO2e")
+if __name__ == '__main__':
+    main()
 
-    else:
-        with top_left:
-            st.subheader(f"Power Plant Opening Decisions in {selected_year}")
-            year_decisions = decisions.get(selected_year, {})
-            for source, opened in year_decisions.items():
-                st.markdown(f"{format_source(source)} Power Plant Opened: {format_decision(opened)}", unsafe_allow_html=True)
-
-        with top_right:
-            st.subheader(f"Added Capacities in {selected_year}")
-            year_capacities = capacities.get(selected_year, {})
-            for source, capacity in year_capacities.items():
-                st.metric(label=f"{source} Capacity (GWh)", value=f"{capacity}")
-
-        with bottom_left:
-            st.subheader(f"Capital Investment Costs in {selected_year}")
-            year_costs = costs.get(selected_year, {})
-            for source, cost in year_costs.items():
-                st.metric(label=f"{source} (CAD)", value=f"${cost:,.2f}")
-
-        with bottom_right:
-            st.subheader(f"Emission Deviations in {selected_year}")
-            deviation = deviations.get(selected_year, 'N/A')
-            st.metric(label=f"Emission Deviation", value=f"{deviation} MTCO2e")
-
-@st.cache
-def convert_df_to_csv(df):
-    return df.to_csv().encode('utf-8')
-
-csv = convert_df_to_csv(filtered_df)  # Assuming 'filtered_df' is your DataFrame
-st.download_button(
-    label="Download data as CSV",
-    data=csv,
     file_name='dashboard_data.csv',
     mime='text/csv',
 )
