@@ -45,7 +45,7 @@ def create_dataframe_updated():
 
 # Use the updated function to create the DataFrame
 df = create_dataframe_updated()
-df['Cost (CAD)']=df['Generation Cost (CAD)']+df['Capacity Investment (CAD)']
+df['Cost (CAD)']=df['Generation Cost (CAD)']+df['Capacity Investment Cost (CAD)']
 
 tab1, tab2 = st.tabs([" Optimal Allocations", "Capacity Decisions & Emissions"])
 with tab1:
