@@ -40,83 +40,42 @@ def create_dataframe():
 
 df = create_dataframe()
 
-
-# Model results for capacity decisions
-capacity_decisions = {
-    2025: {'Wind': [False, False], 'Solar': [False, False], 'Nuclear': [False, False]},
-    2030: {'Wind': [True, True], 'Solar': [False, False], 'Nuclear': [True, True]},
-    2035: {'Wind': [True, False], 'Solar': [False, False], 'Nuclear': [True, True]}
-}
-
-# Emission Deviations
-emission_deviation = {
-    2025: 2.5439801724798365,
-    2030: 0.0,
-    2035: 0.0
-}
-
 # Dashboard title
 st.title("Net Zero Emissions Dashboard")
 
-# Multi-page layout
-page = st.sidebar.selectbox("Choose a Page", ["Summary", "Detailed Analysis"])
+# Sidebar for filters
+year_options = ['All'] + sorted(df['Year'].unique().tolist())
+year_filter = st.selectbox("Select the Year", options=year_options)
+if year_filter == 'All':
+    filtered_df = df
+else:
+    filtered_df = df[df['Year'] == year_filter]
 
-if page == "Summary":
-    # Summary page
-    st.header("Summary")
+# KPIs
+total_emission = filtered_df['Emissions (MTCO2e)'].sum()
+total_cost = filtered_df['Cost (USD)'].sum()
 
-    # KPIs
-    total_emission = df['Emissions (MTCO2e)'].sum()
-    total_cost = df['Cost (USD)'].sum()
+# Layout using containers and columns
+kpi1, kpi2 = st.columns(2)
+kpi1.metric("Total Emissions (MTCO2e)", f"{total_emission:.2f}")
+kpi2.metric("Total Cost (USD)", f"${total_cost:,.2f}")
 
-    # Layout using containers and columns
-    kpi1, kpi2 = st.columns(2)
-    kpi1.metric("Total Emissions (MTCO2e)", f"{total_emission:.2f}")
-    kpi2.metric("Total Cost (USD)", f"${total_cost:,.2f}")
+# Charts layout
+chart1, chart2 = st.columns(2)
+with chart1:
+    st.markdown("### Generation by Source")
+    fig1 = px.bar(filtered_df, x='Source', y='Generation (GWh)', color='Source')
+    st.plotly_chart(fig1)
 
-    # Charts layout
-    chart1, chart2, chart3 = st.columns(3)
-    with chart1:
-        st.markdown("### Generation by Source")
-        fig1 = px.bar(df, x='Source', y='Generation (GWh)', color='Source')
-        st.plotly_chart(fig1)
-
-    with chart2:
-        st.markdown("### Emissions by Source")
-        fig2 = px.bar(df, x='Source', y='Emissions (MTCO2e)', color='Source')
-        st.plotly_chart(fig2)
-
-    with chart3:
-        st.markdown("### Cost by Source")
-        fig3 = px.bar(df, x='Source', y='Cost (USD)', color='Source')
-        st.plotly_chart(fig3)
-
-elif page == "Detailed Analysis":
-    # Detailed Analysis page
-    st.header("Detailed Analysis")
-
-    # Year selection
-    year = st.selectbox("Select Year", [2025, 2030, 2035])
-
-    # Display capacity decisions and costs
-    st.subheader(f"Capacity Increase Decisions for {year}")
-    for source, decisions in capacity_decisions[year].items():
-        for i, decision in enumerate(decisions):
-            plant_status = "Opened" if decision else "Not Opened"
-            color = "green" if decision else "red"
-            st.markdown(f"<span style='color: {color};'>**{source} Power Plant {i+1}:** {plant_status}</span>", unsafe_allow_html=True)
-
-    # Display total capacity and cost
-    st.subheader("Total Costs and Emissions")
-    total_emission_year = df[df['Year'] == year]['Emissions (MTCO2e)'].sum()
-    total_cost_year = df[df['Year'] == year]['Cost (USD)'].sum()
-    emission_color = "green" if emission_deviation[year] == 0 else "red"
-    st.markdown(f"<span style='color: {emission_color};'>**Total Emissions in {year} (MTCO2e):** {total_emission_year:.2f}</span>", unsafe_allow_html=True)
-    st.markdown(f"**Total Cost in {year} (USD):** ${total_cost_year:,.2f}")
-
-    # Emission deviation
-    deviation_color = "green" if emission_deviation[year] == 0 else "red"
-    st.markdown(f"<span style='color: {deviation_color};'>**Emission Deviation in {year}:** {emission_deviation[year]}</span>", unsafe_allow_html=True)
-
-# Run the app
-
+with chart2:
+    st.markdown("### Emissions by Source")
+    fig2 = px.bar(filtered_df, x='Source', y='Emissions (MTCO2e)', color='Source')
+    st.plotly_chart(fig2)
+col1, col2 = st.columns(2)
+with col1:
+    st.markdown("### Cost by Source")
+    fig3 = px.bar(filtered_df, x='Source', y='Cost (USD)', color='Source')
+    st.plotly_chart(fig3)
+with col2:
+    st.markdown("### Detailed Data View")
+    st.dataframe(filtered_df)
