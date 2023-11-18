@@ -215,6 +215,7 @@ with st.container() as tab2:
 
         with col3:
             st.metric(label="Total Emission Deviation", value=f"{total_deviation} MTCO2e")
+            st.image("image.png", use_column_width=True)
 
 # Run the Streamlit app (uncomment this line if running the script directly)
 # st.run()
