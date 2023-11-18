@@ -127,8 +127,8 @@ deviations = {2025: 0.0, 2030: 0.0, 2035: 1e-06}
 
 
     
- with tab2:
-        st.title("Power Plant Decisions and Impacts")
+with tab2:
+    st.title("Power Plant Decisions and Impacts")
 
         # Year filter with 'All' option
         year_options = ['All', 2025, 2030, 2035]
@@ -174,3 +174,5 @@ deviations = {2025: 0.0, 2030: 0.0, 2035: 1e-06}
 
     
 
+
+        
