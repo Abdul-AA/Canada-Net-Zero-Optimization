@@ -114,7 +114,8 @@ with tab2:
 
         with col1:
             st.markdown("#### Emission Deviations")
-            deviation_color = "green" if df[df['Year'] == year]['Emission Deviation'].iloc[0] == 0 else "red"
+            deviation = df[df['Year'] == year]['Emission Deviation'].iloc[0]
+            deviation_color = "normal" if deviation <= 0 else "inverse"
             st.metric("Emission Deviation (MTCO2e)", df[df['Year'] == year]['Emission Deviation'].iloc[0], delta_color=deviation_color)
 
         with col2:
