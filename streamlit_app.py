@@ -174,8 +174,8 @@ with st.container() as tab2:
                 total_yearly_expenditure += total_cost  # Accumulate total expenditure
     
                 with col1:
-                    st.metric(label=f"{selected_year} {source} Capacity Increases", value=f"{num_decisions}")
-                    st.metric(label="Total Capacity Added (GWh)", value=f"{total_capacity}")
+                    st.metric(label=f"{selected_year} {source} Additional Power Plants", value=f"{num_decisions}")
+                    st.metric(label=f"Total Capacity Added for {source} (GWh)", value=f"{total_capacity}")
     
                 with col2:
                     st.metric(label=f"Total Cost {source} (CAD)", value=f"${total_cost:,.2f}")
