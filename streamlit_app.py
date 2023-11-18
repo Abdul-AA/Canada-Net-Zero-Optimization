@@ -70,6 +70,7 @@ with tab1:
     with chart1:
         st.markdown("### Generation by Source")
         fig1 = px.bar(filtered_df, x='Source', y='Generation (GWh)', color='Source')
+        fig1.update_layout(showlegend=False)
         st.plotly_chart(fig1)
     
     with chart2:
@@ -80,6 +81,7 @@ with tab1:
     with col1:
         st.markdown("### Cost by Source")
         fig3 = px.bar(filtered_df, x='Source', y='Cost (CAD)', color='Source')
+        fig3.update_layout(showlegend=False)
         st.plotly_chart(fig3)
     with col2:
         st.markdown("### Detailed Data View")
@@ -90,37 +92,6 @@ with tab1:
 def format_decision(decision):
     color = 'green' if decision == 'Yes' else 'red'
     return f"<span style='color: {color};'>{decision}</span>"
-
-# Function to format source name with color
-def format_source(source):
-    colors = {'Wind': 'blue', 'Solar': 'orange', 'Nuclear': 'purple'}
-    return f"<span style='color: {colors[source]}; font-weight:bold;'>{source}</span>"
-
-# Function to format values with color
-def format_value(value, color='black'):
-    return f"<span style='color: {color};'>{value}</span>"
-
-# Function to aggregate data across all years
-def aggregate_data(capacities, costs):
-    agg_capacities = {source: sum(years.get(source, 0) for years in capacities.values()) for source in ['Wind', 'Solar', 'Nuclear']}
-    agg_costs = {source: sum(years.get(source, 0) for years in costs.values()) for source in ['Wind', 'Solar', 'Nuclear']}
-    return agg_capacities, agg_costs
-
-# Initialize data (placeholders for actual data)
-decisions = {
-    2025: {'Wind': 'No', 'Solar': 'No', 'Nuclear': 'No'},
-    2030: {'Wind': 'Yes', 'Solar': 'No', 'Nuclear': 'Yes'},
-    2035: {'Wind': 'Yes', 'Solar': 'No', 'Nuclear': 'No'}
-}
-capacities = {
-    2030: {'Wind': 43800, 'Solar': 0, 'Nuclear': 48180},
-    2035: {'Wind': 43800, 'Solar': 0, 'Nuclear': 0}
-}
-costs = {
-    2030: {'Wind': 8220000000, 'Nuclear': 9590000000},
-    2035: {'Wind': 8220000000}
-}
-deviations = {2025: 0.0, 2030: 0.0, 2035: 1e-06}
 
 
 
