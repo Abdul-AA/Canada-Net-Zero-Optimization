@@ -126,10 +126,8 @@ deviations = {2025: 0.0, 2030: 0.0, 2035: 1e-06}
 
 
 
-def main():
-    tab2 = st.container()
     
-    with tab2:
+ with tab2:
         st.title("Power Plant Decisions and Impacts")
 
         # Year filter with 'All' option
@@ -173,10 +171,6 @@ def main():
         for idx, year in enumerate(year_options[1:]):
             st.metric(label=f"{year} Emission Deviation", value=f"{emission_deviations[idx]} MTCO2e")
 
-if __name__ == '__main__':
-    main()
 
-    file_name='dashboard_data.csv',
-    mime='text/csv',
-)
+    
 
