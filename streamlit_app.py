@@ -186,3 +186,16 @@ with tab2:
             st.subheader(f"Emission Deviations in {selected_year}")
             deviation = deviations.get(selected_year, 'N/A')
             st.metric(label=f"Emission Deviation", value=f"{deviation} MTCO2e")
+
+@st.cache
+def convert_df_to_csv(df):
+    return df.to_csv().encode('utf-8')
+
+csv = convert_df_to_csv(filtered_df)  # Assuming 'filtered_df' is your DataFrame
+st.download_button(
+    label="Download data as CSV",
+    data=csv,
+    file_name='dashboard_data.csv',
+    mime='text/csv',
+)
+
