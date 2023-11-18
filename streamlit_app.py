@@ -179,7 +179,8 @@ with st.container() as tab2:
     
                 with col2:
                     st.metric(label=f"Total Cost {source} (CAD)", value=f"${total_cost:,.2f}")
-                    st.metric(label=f"Total Expenditure for {selected_year} (CAD)", value=f"${total_yearly_expenditure:,.2f}")
+        with col2: 
+            st.metric(label=f"Total Expenditure for {selected_year} (CAD)", value=f"${total_yearly_expenditure:,.2f}")
 
 
 
