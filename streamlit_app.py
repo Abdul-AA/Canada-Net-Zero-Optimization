@@ -3,7 +3,7 @@ import plotly.express as px
 import pandas as pd
 
 # Set page config
-st.set_page_config(page_title="Net Zero Emissions Dashboard", page_icon="🌍", layout="wide")
+st.set_page_config(page_title="Canada Net Zero", page_icon="🌍", layout="wide")
 
 # Function to create and preprocess DataFrame
 def create_dataframe():
@@ -39,31 +39,32 @@ def create_dataframe():
     return pd.concat([df_2025, df_2030, df_2035], ignore_index=True)
 
 df = create_dataframe()
-
+tab1, tab2=st.tabs(2)
 # Dashboard title
-st.title("Net Zero Emissions Dashboard")
-
-# Sidebar for filters
-year_options = ['All'] + sorted(df['Year'].unique().tolist())
-year_filter = st.selectbox("Select the Year", options=year_options)
-if year_filter == 'All':
-    filtered_df = df
-else:
-    filtered_df = df[df['Year'] == year_filter]
-
-# KPIs
-total_emission = filtered_df['Emissions (MTCO2e)'].sum()
-total_cost = filtered_df['Cost (USD)'].sum()
-
-# Layout using containers and columns
-kpi1, kpi2 = st.columns(2)
-kpi1.metric("Total Emissions (MTCO2e)", f"{total_emission:.2f}")
-kpi2.metric("Total Cost (USD)", f"${total_cost:,.2f}")
-
-# Charts layout
-chart1, chart2 = st.columns(2)
-with chart1:
-    st.markdown("### Generation by Source")
+with tab1:
+    st.title("Net Zero Emissions Dashboard")
+    
+    # Sidebar for filters
+    year_options = ['All'] + sorted(df['Year'].unique().tolist())
+    year_filter = st.selectbox("Select the Year", options=year_options)
+    if year_filter == 'All':
+        filtered_df = df
+    else:
+        filtered_df = df[df['Year'] == year_filter]
+    
+    # KPIs
+    total_emission = filtered_df['Emissions (MTCO2e)'].sum()
+    total_cost = filtered_df['Cost (USD)'].sum()
+    
+    # Layout using containers and columns
+    kpi1, kpi2 = st.columns(2)
+    kpi1.metric("Total Emissions (MTCO2e)", f"{total_emission:.2f}")
+    kpi2.metric("Total Cost (USD)", f"${total_cost:,.2f}")
+    
+    # Charts layout
+    chart1, chart2 = st.columns(2)
+    with chart1:
+        st.markdown("### Generation by Source")
     fig1 = px.bar(filtered_df, x='Source', y='Generation (GWh)', color='Source')
     st.plotly_chart(fig1)
 
