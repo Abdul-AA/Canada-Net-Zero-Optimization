@@ -91,6 +91,8 @@ import streamlit as st
 
 import streamlit as st
 
+import streamlit as st
+
 # Second page of the app
 with tab2:
     st.title("Power Plant Decisions and Impacts")
@@ -118,36 +120,61 @@ with tab2:
 
     deviations = {2025: 0.0, 2030: 0.0, 2035: 1e-06}
 
-    # Function to display data for a given year
+    # Function to aggregate data across all years
+    def aggregate_data():
+        agg_capacities = {source: sum(years.get(source, 0) for years in capacities.values()) for source in ['Wind', 'Solar', 'Nuclear']}
+        agg_costs = {source: sum(years.get(source, 0) for years in costs.values()) for source in ['Wind', 'Solar', 'Nuclear']}
+        return agg_capacities, agg_costs
+
+    # Display aggregated data
+    def display_aggregated_data():
+        agg_capacities, agg_costs = aggregate_data()
+
+        with st.container():
+            st.subheader("Aggregated Added Capacities Across All Years")
+            for source, capacity in agg_capacities.items():
+                st.markdown(f"{source} Total Added Capacity: {capacity} GWh")
+
+        with st.container():
+            st.subheader("Aggregated Associated Costs Across All Years")
+            for source, cost in agg_costs.items():
+                st.markdown(f"{source} Total Cost: {cost} CAD")
+
+    # Display binary decisions for all years
+    def display_all_decisions():
+        for year, year_decisions in decisions.items():
+            with st.container():
+                st.subheader(f"Power Plant Opening Decisions in {year}")
+                for source, opened in year_decisions.items():
+                    st.markdown(f"{source} Power Plant Opened: {opened}")
+
+    # Display data for a specific year
     def display_year_data(year):
         with st.container():
-            st.subheader(f"Year {year}")
-            st.markdown("**Power Plant Opening Decisions**")
+            st.subheader(f"Power Plant Opening Decisions in {year}")
             for source, opened in decisions.get(year, {}).items():
                 st.markdown(f"{source} Power Plant Opened: {opened}")
 
-    # Function to aggregate and display data for 'All' years
-    def display_aggregated_data():
-        total_capacities = {source: sum(years.get(source, 0) for years in capacities.values()) for source in ['Wind', 'Solar', 'Nuclear']}
-        total_costs = {source: sum(years.get(source, 0) for years in costs.values()) for source in ['Wind', 'Solar', 'Nuclear']}
+        with st.container():
+            st.subheader(f"Added Capacities in {year}")
+            year_capacities = capacities.get(year, {})
+            for source, capacity in year_capacities.items():
+                st.markdown(f"{source} Added Capacity: {capacity} GWh")
 
-        st.markdown("**Aggregated Added Capacities**")
-        for source, capacity in total_capacities.items():
-            st.markdown(f"{source} Total Added Capacity: {capacity} GWh")
+        with st.container():
+            st.subheader(f"Associated Costs in {year}")
+            year_costs = costs.get(year, {})
+            for source, cost in year_costs.items():
+                st.markdown(f"{source} Cost: {cost} CAD")
 
-        st.markdown("**Aggregated Associated Costs**")
-        for source, cost in total_costs.items():
-            st.markdown(f"{source} Total Cost: {cost} CAD")
+        with st.container():
+            st.subheader(f"Emission Deviations in {year}")
+            st.markdown(f"Emission Deviation: {deviations.get(year, 'N/A')} MTCO2e")
 
-        st.markdown("**Emission Deviations**")
-        for year, deviation in deviations.items():
-            st.markdown(f"{year} Emission Deviation: {deviation} MTCO2e")
-
-    # Display data based on selected year
+    # Logic to display data based on selected year
     if selected_year == 'All':
-        for year in [2025, 2030, 2035]:
-            display_year_data(year)
         display_aggregated_data()
+        display_all_decisions()
     else:
         display_year_data(selected_year)
 
