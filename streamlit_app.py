@@ -3,7 +3,7 @@ import plotly.express as px
 import pandas as pd
 
 # Set page config
-st.set_page_config(page_title="Net Zero Emissions Dashboard", page_icon="🌍", layout="wide")
+st.set_page_config(page_title="Canada Net Zero", page_icon="🌍", layout="wide")
 
 import pandas as pd
 
@@ -85,3 +85,62 @@ with tab1:
     with col2:
         st.markdown("### Detailed Data View")
         st.dataframe(filtered_df)
+
+# Second page of the app
+with tab2:
+    st.title("Power Plant Decisions and Impacts")
+
+    # Color scheme
+    colors = {'Wind': '#1f77b4', 'Solar': '#ff7f0e', 'Nuclear': '#2ca02c'}
+
+    # Top containers for binary decisions and added capacities
+    container1, container2 = st.columns(2)
+
+    with container1:
+        st.subheader("Power Plant Opening Decisions")
+        # Display binary decisions
+        decisions_2025 = {'Wind': 'No', 'Solar': 'No', 'Nuclear': 'No'}
+        decisions_2030 = {'Wind': 'Yes', 'Solar': 'No', 'Nuclear': 'Yes'}
+        decisions_2035 = {'Wind': 'Yes', 'Solar': 'No', 'Nuclear': 'No'}
+        years_decisions = {2025: decisions_2025, 2030: decisions_2030, 2035: decisions_2035}
+
+        for year, decisions in years_decisions.items():
+            st.markdown(f"#### Year {year}")
+            for source, opened in decisions.items():
+                st.markdown(f"{source} Power Plant Opened: {opened}", color=colors[source])
+
+    with container2:
+        st.subheader("Added Capacities")
+        # Display added capacities
+        capacities_2030 = {'Wind': 43800, 'Solar': 0, 'Nuclear': 48180}
+        capacities_2035 = {'Wind': 43800, 'Solar': 0, 'Nuclear': 0}
+        years_capacities = {2030: capacities_2030, 2035: capacities_2035}
+
+        for year, capacities in years_capacities.items():
+            st.markdown(f"#### Year {year}")
+            for source, capacity in capacities.items():
+                st.markdown(f"{source} Added Capacity: {capacity} GWh", color=colors[source])
+
+    # Bottom containers for costs and emission deviation
+    container3, container4 = st.columns(2)
+
+    with container3:
+        st.subheader("Associated Costs")
+        # Display costs
+        costs_2030 = {'Wind': 8220000000, 'Nuclear': 9590000000}
+        costs_2035 = {'Wind': 8220000000}
+        years_costs = {2030: costs_2030, 2035: costs_2035}
+
+        for year, costs in years_costs.items():
+            st.markdown(f"#### Year {year}")
+            for source, cost in costs.items():
+                st.markdown(f"{source} Cost: {cost} CAD", color=colors[source])
+
+    with container4:
+        st.subheader("Emission Deviations")
+        # Display emission deviations
+        deviations = {2025: 0.0, 2030: 0.0, 2035: 1e-06}
+        for year, deviation in deviations.items():
+            st.markdown(f"Emission Deviation for {year}: {deviation} MTCO2e")
+
+# Ensure the rest of your Streamlit app code is appropriately placed
