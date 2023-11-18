@@ -63,7 +63,7 @@ with tab1:
     # Layout using containers and columns
     kpi1, kpi2 = st.columns(2)
     kpi1.metric("Total Emissions (MTCO2e)", f"{total_emission:.2f}",delta=None, delta_color="inverse")
-    kpi2.metric("Total Cost (CAD)", f"${total_cost:,.2f}",delta=None, delta_color="red")
+    kpi2.metric("Total Cost (CAD)", f"${total_cost:,.2f}",delta=None, delta_color="inverse")
     
     # Charts layout
     chart1, chart2 = st.columns(2)
