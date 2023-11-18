@@ -13,7 +13,8 @@ def create_dataframe_updated():
         'Source': ['Wind', 'Solar', 'Oil', 'Nuclear', 'Hydro', 'Natural Gas', 'Coal & Coke', 'Biomass & Geothermal'],
         'Generation (GWh)': [64389.48, 0.0, 1379.91, 78631.37, 402575.9, 48364.54, 8184.54, 8281.2],
         'Emissions (MTCO2e)': [0.0, 0.0, 0.5105667, 0.0, 0.0, 17.8948798, 6.2202504, 0.0],
-        'Cost (CAD)': [5204601668.4, 0.0, 85071451.5, 7002123498.5, 12133637626.0, 4704418805.8, 683982007.8, 680714640.0]
+        'Generation Cost (CAD)': [5204601668.4, 0.0, 85071451.5, 7002123498.5, 12133637626.0, 4704418805.8, 683982007.8, 680714640.0],
+        'Capacicity Investment Cost (CAD)':[0,0,0,0,0,0,0,0]
     }
 
     data_2030 = {
@@ -21,7 +22,9 @@ def create_dataframe_updated():
         'Source': ['Wind', 'Solar', 'Oil', 'Nuclear', 'Hydro', 'Natural Gas', 'Coal & Coke', 'Biomass & Geothermal'],
         'Generation (GWh)': [151989.48, 0.0, 1379.91, 126811.37, 402575.9, 3368.82, 0.0, 8281.2],
         'Emissions (MTCO2e)': [0.0, 0.0, 0.5105667, 0.0, 0.0, 1.2464634, 0.0, 0.0],
-        'Cost (CAD)': [12285309668.4, 0.0, 85071451.5, 11292552498.5, 12133637626.0, 327685121.4, 0.0, 680714640.0]
+        'Generation Cost (CAD)': [12285309668.4, 0.0, 85071451.5, 11292552498.5, 12133637626.0, 327685121.4, 0.0, 680714640.0],
+        'Capacicity Investment Cost (CAD)':[8220000000.0,0,0,9590000000.00,0,0,0,0,]
+        
     }
 
     data_2035 = {
@@ -29,7 +32,8 @@ def create_dataframe_updated():
         'Source': ['Wind', 'Solar', 'Oil', 'Nuclear', 'Hydro', 'Natural Gas', 'Coal & Coke', 'Biomass & Geothermal'],
         'Generation (GWh)': [239589.48, 10583.16, 0.0, 126811.37, 402575.9, 0.0027, 0.0, 8281.2],
         'Emissions (MTCO2e)': [0.0, 0.0, 0.0, 0.0, 0.0, 1e-06, 0.0, 0.0],
-        'Cost (CAD)': [19366017668.4, 2174838824.54, 0.0, 11292552498.5, 12133637626.0, 262.92, 0.0, 680714640.0]
+        'Generation Cost (CAD)': [19366017668.4, 2174838824.54, 0.0, 11292552498.5, 12133637626.0, 262.92, 0.0, 680714640.0],
+        'Capacicity Investment Cost (CAD)':[8220000000.0,0,0,0,0,0,0,0]
     }
 
     # Combine all data into one DataFrame
@@ -41,7 +45,7 @@ def create_dataframe_updated():
 
 # Use the updated function to create the DataFrame
 df = create_dataframe_updated()
-
+df['Cost (CAD)']=df['Generation Cost (CAD)']+df['Capacity Investment (CAD)']
 
 tab1, tab2 = st.tabs([" Optimal Allocations", "Capacity Decisions & Emissions"])
 with tab1:
