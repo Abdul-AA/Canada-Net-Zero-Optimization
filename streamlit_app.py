@@ -46,7 +46,7 @@ df = create_dataframe_updated()
 tab1, tab2 = st.tabs([" Optimal Allocations", "Capacity Decisions & Emissions"])
 with tab1:
 # Dashboard title
-    st.title("Net Zero Emissions Dashboard")
+    st.title("Canada Net Zero")
     
     # Sidebar for filters
     year_options = ['All'] + sorted(df['Year'].unique().tolist())
@@ -62,8 +62,8 @@ with tab1:
     
     # Layout using containers and columns
     kpi1, kpi2 = st.columns(2)
-    kpi1.metric("Total Emissions (MTCO2e)", f"{total_emission:.2f}")
-    kpi2.metric("Total Cost (CAD)", f"${total_cost:,.2f}")
+    kpi1.metric("Total Emissions (MTCO2e)", f"{total_emission:.2f}",delta=None, delta_color="inverse")
+    kpi2.metric("Total Cost (CAD)", f"${total_cost:,.2f}",delta=None, delta_color="inverse")
     
     # Charts layout
     chart1, chart2 = st.columns(2)
