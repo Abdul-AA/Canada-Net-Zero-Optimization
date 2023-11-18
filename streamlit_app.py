@@ -204,7 +204,7 @@ with co1:
         file_name='dashboard_data.csv',
         mime='text/csv',
     )
-with col2
+with col2:
     st.markdown(
         """
         For more details, check out our [Emissions Optimization Model on GitHub](
