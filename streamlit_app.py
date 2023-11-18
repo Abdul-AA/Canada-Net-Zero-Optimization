@@ -87,12 +87,6 @@ with tab1:
         st.dataframe(filtered_df)
 
 
-import streamlit as st
-
-import streamlit as st
-
-import streamlit as st
-
 # Second page of the app
 with tab2:
     st.title("Power Plant Decisions and Impacts")
@@ -129,45 +123,47 @@ with tab2:
     # Display aggregated data
     def display_aggregated_data():
         agg_capacities, agg_costs = aggregate_data()
+        col1, col2 = st.columns(2)
 
-        with st.container():
+        with col1:
             st.subheader("Aggregated Added Capacities Across All Years")
             for source, capacity in agg_capacities.items():
                 st.markdown(f"{source} Total Added Capacity: {capacity} GWh")
 
-        with st.container():
+        with col2:
             st.subheader("Aggregated Associated Costs Across All Years")
             for source, cost in agg_costs.items():
                 st.markdown(f"{source} Total Cost: {cost} CAD")
 
     # Display binary decisions for all years
     def display_all_decisions():
+        col1, col2 = st.columns(2)
         for year, year_decisions in decisions.items():
-            with st.container():
+            with col1 if year != 2035 else col2:
                 st.subheader(f"Power Plant Opening Decisions in {year}")
                 for source, opened in year_decisions.items():
                     st.markdown(f"{source} Power Plant Opened: {opened}")
 
     # Display data for a specific year
     def display_year_data(year):
-        with st.container():
+        col1, col2 = st.columns(2)
+
+        with col1:
             st.subheader(f"Power Plant Opening Decisions in {year}")
             for source, opened in decisions.get(year, {}).items():
                 st.markdown(f"{source} Power Plant Opened: {opened}")
 
-        with st.container():
             st.subheader(f"Added Capacities in {year}")
             year_capacities = capacities.get(year, {})
             for source, capacity in year_capacities.items():
                 st.markdown(f"{source} Added Capacity: {capacity} GWh")
 
-        with st.container():
+        with col2:
             st.subheader(f"Associated Costs in {year}")
             year_costs = costs.get(year, {})
             for source, cost in year_costs.items():
                 st.markdown(f"{source} Cost: {cost} CAD")
 
-        with st.container():
             st.subheader(f"Emission Deviations in {year}")
             st.markdown(f"Emission Deviation: {deviations.get(year, 'N/A')} MTCO2e")
 
