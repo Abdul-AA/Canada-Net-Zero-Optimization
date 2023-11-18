@@ -119,4 +119,4 @@ elif page == "Detailed Analysis":
     st.markdown(f"<span style='color: {deviation_color};'>**Emission Deviation in {year}:** {emission_deviation[year]}</span>", unsafe_allow_html=True)
 
 # Run the app
-st.run()
+
