@@ -89,16 +89,15 @@ with tab1:
 
 import streamlit as st
 
+import streamlit as st
+
 # Second page of the app
 with tab2:
     st.title("Power Plant Decisions and Impacts")
 
-    # Year filter
-    year_options = [2025, 2030, 2035]
+    # Year filter with 'All' option
+    year_options = ['All', 2025, 2030, 2035]
     selected_year = st.selectbox("Select Year", options=year_options)
-
-    # Top containers for binary decisions and added capacities
-    container1, container2 = st.columns(2)
 
     # Data for binary decisions, capacities, and costs
     decisions = {
@@ -119,36 +118,37 @@ with tab2:
 
     deviations = {2025: 0.0, 2030: 0.0, 2035: 1e-06}
 
-    with container1:
-        st.subheader("Power Plant Opening Decisions")
-        # Display binary decisions for selected year
-        for source, opened in decisions[selected_year].items():
-            st.markdown(f"{source} Power Plant Opened: {opened}")
+    # Function to display data for a given year
+    def display_year_data(year):
+        with st.container():
+            st.subheader(f"Year {year}")
+            st.markdown("**Power Plant Opening Decisions**")
+            for source, opened in decisions.get(year, {}).items():
+                st.markdown(f"{source} Power Plant Opened: {opened}")
 
-    with container2:
-        st.subheader("Added Capacities")
-        # Display added capacities for selected year
-        if selected_year in capacities:
-            for source, capacity in capacities[selected_year].items():
-                st.markdown(f"{source} Added Capacity: {capacity} GWh")
-        else:
-            st.markdown("No added capacities in this year")
+    # Function to aggregate and display data for 'All' years
+    def display_aggregated_data():
+        total_capacities = {source: sum(years.get(source, 0) for years in capacities.values()) for source in ['Wind', 'Solar', 'Nuclear']}
+        total_costs = {source: sum(years.get(source, 0) for years in costs.values()) for source in ['Wind', 'Solar', 'Nuclear']}
 
-    # Bottom containers for costs and emission deviation
-    container3, container4 = st.columns(2)
+        st.markdown("**Aggregated Added Capacities**")
+        for source, capacity in total_capacities.items():
+            st.markdown(f"{source} Total Added Capacity: {capacity} GWh")
 
-    with container3:
-        st.subheader("Associated Costs")
-        # Display costs for selected year
-        if selected_year in costs:
-            for source, cost in costs[selected_year].items():
-                st.markdown(f"{source} Cost: {cost} CAD")
-        else:
-            st.markdown("No associated costs in this year")
+        st.markdown("**Aggregated Associated Costs**")
+        for source, cost in total_costs.items():
+            st.markdown(f"{source} Total Cost: {cost} CAD")
 
-    with container4:
-        st.subheader("Emission Deviations")
-        # Display emission deviations for selected year
-        st.markdown(f"Emission Deviation for {selected_year}: {deviations[selected_year]} MTCO2e")
+        st.markdown("**Emission Deviations**")
+        for year, deviation in deviations.items():
+            st.markdown(f"{year} Emission Deviation: {deviation} MTCO2e")
+
+    # Display data based on selected year
+    if selected_year == 'All':
+        for year in [2025, 2030, 2035]:
+            display_year_data(year)
+        display_aggregated_data()
+    else:
+        display_year_data(selected_year)
 
 # Ensure the rest of your Streamlit app code is appropriately placed
