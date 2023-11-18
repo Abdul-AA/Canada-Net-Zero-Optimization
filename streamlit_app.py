@@ -5,7 +5,6 @@ import pandas as pd
 # Set page config
 st.set_page_config(page_title="Canada Net Zero", page_icon="🌍", layout="wide")
 
-import pandas as pd
 
 # Function to create and preprocess DataFrame with updated data
 def create_dataframe_updated():
@@ -87,12 +86,7 @@ with tab1:
         st.dataframe(filtered_df)
 
 
-import streamlit as st
 
-# Set up the page configuration
-st.set_page_config(page_title="Net Zero Emissions Dashboard", page_icon="🌍", layout="wide")
-
-# Function to format binary decision with color
 def format_decision(decision):
     color = 'green' if decision == 'Yes' else 'red'
     return f"<span style='color: {color};'>{decision}</span>"
