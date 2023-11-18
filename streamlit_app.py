@@ -127,11 +127,13 @@ deviations = {2025: 0.0, 2030: 0.0, 2035: 1e-06}
 
 
 
+import streamlit as st
+
 with st.container() as tab2:
     st.title("Power Plant Decisions and Impacts")
 
     # Year filter with 'All' option
-    year_options = ['All', '2025', '2030', '2035']  # Consistent data type
+    year_options = ['All', '2025', '2030', '2035']
     selected_year = st.selectbox("Select Year", options=year_options)
 
     # Cost per unit for each increase
@@ -148,19 +150,15 @@ with st.container() as tab2:
         'Wind': 43800
     }
 
-    # Capacity increase decisions
+    # Capacity increase decisions adjusted as per your description
     capacity_decision = {
-        'Wind': [0, 1, 1],
-        'Solar': [0, 0, 0],
-        'Nuclear': [0, 1, 0]
+        'Wind': [0, 2, 2],  # Two plants in 2030 and two more in 2035
+        'Solar': [0, 0, 0],  # No plants
+        'Nuclear': [0, 1, 0]  # One plant in 2030
     }
 
     # Emission deviations
     emission_deviations = [0.0, 0.0, 1.0001e-06]
-
-    # Function to calculate cumulative decisions up to a year
-    def cumulative_decisions(source, up_to_index):
-        return sum(capacity_decision[source][:up_to_index + 1])
 
     # Logic for individual years
     if selected_year != 'All':
@@ -168,16 +166,17 @@ with st.container() as tab2:
         col1, col2 = st.columns(2)
 
         for source in ['Wind', 'Solar', 'Nuclear']:
-            num_decisions = cumulative_decisions(source, idx)
-            total_capacity = capacity_added[source] * num_decisions
-            total_cost = increase_cost[source] * num_decisions
+            num_decisions = capacity_decision[source][idx]
+            if num_decisions > 0:  # Only display non-zero metrics
+                total_capacity = capacity_added[source] * num_decisions
+                total_cost = increase_cost[source] * num_decisions
 
-            with col1:
-                st.metric(label=f"{selected_year} {source} Capacity Increases", value=f"{num_decisions}")
-                st.metric(label="Total Capacity Added (GWh)", value=f"{total_capacity}")
+                with col1:
+                    st.metric(label=f"{selected_year} {source} Capacity Increases", value=f"{num_decisions}")
+                    st.metric(label="Total Capacity Added (GWh)", value=f"{total_capacity}")
 
-            with col2:
-                st.metric(label="Total Cost (CAD)", value=f"${total_cost:,.2f}")
+                with col2:
+                    st.metric(label="Total Cost (CAD)", value=f"${total_cost:,.2f}")
 
         emission_deviation = emission_deviations[idx]
         st.metric(label=f"{selected_year} Emission Deviation", value=f"{emission_deviation} MTCO2e")
@@ -191,10 +190,11 @@ with st.container() as tab2:
 
         for year_idx, year in enumerate(year_options[1:]):  # Skip 'All'
             for source in ['Wind', 'Solar', 'Nuclear']:
-                num_decisions = cumulative_decisions(source, year_idx)
-                total_expenditure += increase_cost[source] * num_decisions
-                total_capacity += capacity_added[source] * num_decisions
-                plants_built[source] += num_decisions
+                num_decisions = capacity_decision[source][year_idx]
+                if num_decisions > 0:  # Consider only non-zero decisions
+                    total_expenditure += increase_cost[source] * num_decisions
+                    total_capacity += capacity_added[source] * num_decisions
+                    plants_built[source] += num_decisions
 
         col1, col2, col3 = st.columns(3)
 
@@ -204,7 +204,11 @@ with st.container() as tab2:
 
         with col2:
             for source, count in plants_built.items():
-                st.metric(label=f"Total {source} Plants Built", value=f"{count}")
+                if count > 0:  # Display only if plants were actually built
+                    st.metric(label=f"Total {source} Plants Built", value=f"{count}")
 
         with col3:
             st.metric(label="Total Emission Deviation", value=f"{total_deviation} MTCO2e")
+
+# Run the Streamlit app (uncomment this line if running the script directly)
+# st.run()
