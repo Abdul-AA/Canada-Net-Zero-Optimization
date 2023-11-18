@@ -69,18 +69,18 @@ with tab1:
     chart1, chart2 = st.columns(2)
     with chart1:
         st.markdown("### Generation by Source")
-        fig1 = px.bar(filtered_df, x='Source', y='Generation (GWh)', color='Source')
+        fig1 = px.bar(filtered_df.sort_values('Generation (GWh)', ascending=False), x='Source', y='Generation (GWh)', color='Source')
         fig1.update_layout(showlegend=False)
         st.plotly_chart(fig1)
     
     with chart2:
         st.markdown("### Emissions by Source")
-        fig2 = px.bar(filtered_df, x='Source', y='Emissions (MTCO2e)', color='Source')
+        fig2 = px.bar(filtered_df.sort_values('Generation (GWh)', ascending=False), x='Source', y='Emissions (MTCO2e)', color='Source')
         st.plotly_chart(fig2)
     col1, col2 = st.columns(2)
     with col1:
         st.markdown("### Cost by Source")
-        fig3 = px.bar(filtered_df, x='Source', y='Cost (CAD)', color='Source')
+        fig3 = px.bar(filtered_df.sort_values('Generation (GWh)', ascending=False), x='Source', y='Cost (CAD)', color='Source')
         fig3.update_layout(showlegend=False)
         st.plotly_chart(fig3)
     with col2:
