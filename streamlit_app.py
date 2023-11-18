@@ -87,7 +87,50 @@ with tab1:
         st.dataframe(filtered_df)
 
 
-# Second page of the app
+import streamlit as st
+
+# Set up the page configuration
+st.set_page_config(page_title="Net Zero Emissions Dashboard", page_icon="🌍", layout="wide")
+
+# Function to format binary decision with color
+def format_decision(decision):
+    color = 'green' if decision == 'Yes' else 'red'
+    return f"<span style='color: {color};'>{decision}</span>"
+
+# Function to format source name with color
+def format_source(source):
+    colors = {'Wind': 'blue', 'Solar': 'orange', 'Nuclear': 'purple'}
+    return f"<span style='color: {colors[source]}; font-weight:bold;'>{source}</span>"
+
+# Function to format values with color
+def format_value(value, color='black'):
+    return f"<span style='color: {color};'>{value}</span>"
+
+# Function to aggregate data across all years
+def aggregate_data(capacities, costs):
+    agg_capacities = {source: sum(years.get(source, 0) for years in capacities.values()) for source in ['Wind', 'Solar', 'Nuclear']}
+    agg_costs = {source: sum(years.get(source, 0) for years in costs.values()) for source in ['Wind', 'Solar', 'Nuclear']}
+    return agg_capacities, agg_costs
+
+# Initialize data (placeholders for actual data)
+decisions = {
+    2025: {'Wind': 'No', 'Solar': 'No', 'Nuclear': 'No'},
+    2030: {'Wind': 'Yes', 'Solar': 'No', 'Nuclear': 'Yes'},
+    2035: {'Wind': 'Yes', 'Solar': 'No', 'Nuclear': 'No'}
+}
+capacities = {
+    2030: {'Wind': 43800, 'Solar': 0, 'Nuclear': 48180},
+    2035: {'Wind': 43800, 'Solar': 0, 'Nuclear': 0}
+}
+costs = {
+    2030: {'Wind': 8220000000, 'Nuclear': 9590000000},
+    2035: {'Wind': 8220000000}
+}
+deviations = {2025: 0.0, 2030: 0.0, 2035: 1e-06}
+
+
+
+# Tab 2 Content
 with tab2:
     st.title("Power Plant Decisions and Impacts")
 
@@ -95,83 +138,46 @@ with tab2:
     year_options = ['All', 2025, 2030, 2035]
     selected_year = st.selectbox("Select Year", options=year_options)
 
-    # Data for binary decisions, capacities, and costs
-    decisions = {
-        2025: {'Wind': 'No', 'Solar': 'No', 'Nuclear': 'No'},
-        2030: {'Wind': 'Yes', 'Solar': 'No', 'Nuclear': 'Yes'},
-        2035: {'Wind': 'Yes', 'Solar': 'No', 'Nuclear': 'No'}
-    }
-
-    capacities = {
-        2030: {'Wind': 43800, 'Solar': 0, 'Nuclear': 48180},
-        2035: {'Wind': 43800, 'Solar': 0, 'Nuclear': 0}
-    }
-
-    costs = {
-        2030: {'Wind': 8220000000, 'Nuclear': 9590000000},
-        2035: {'Wind': 8220000000}
-    }
-
-    deviations = {2025: 0.0, 2030: 0.0, 2035: 1e-06}
-
-    # Function to aggregate data across all years
-    def aggregate_data():
-        agg_capacities = {source: sum(years.get(source, 0) for years in capacities.values()) for source in ['Wind', 'Solar', 'Nuclear']}
-        agg_costs = {source: sum(years.get(source, 0) for years in costs.values()) for source in ['Wind', 'Solar', 'Nuclear']}
-        return agg_capacities, agg_costs
-
-    # Display aggregated data
-    def display_aggregated_data():
-        agg_capacities, agg_costs = aggregate_data()
+    # Display aggregated data for 'All' years
+    if selected_year == 'All':
+        agg_capacities, agg_costs = aggregate_data(capacities, costs)
         col1, col2 = st.columns(2)
 
         with col1:
             st.subheader("Aggregated Added Capacities Across All Years")
             for source, capacity in agg_capacities.items():
-                st.markdown(f"{source} Total Added Capacity: {capacity} GWh")
+                st.markdown(f"{format_source(source)} Total Added Capacity: {format_value(capacity, 'blue')} GWh", unsafe_allow_html=True)
 
         with col2:
             st.subheader("Aggregated Associated Costs Across All Years")
             for source, cost in agg_costs.items():
-                st.markdown(f"{source} Total Cost: {cost} CAD")
+                st.markdown(f"{format_source(source)} Total Cost: {format_value(cost, 'blue')} CAD", unsafe_allow_html=True)
 
-    # Display binary decisions for all years
-    def display_all_decisions():
-        col1, col2 = st.columns(2)
         for year, year_decisions in decisions.items():
-            with col1 if year != 2035 else col2:
+            with st.container():
                 st.subheader(f"Power Plant Opening Decisions in {year}")
                 for source, opened in year_decisions.items():
-                    st.markdown(f"{source} Power Plant Opened: {opened}")
+                    st.markdown(f"{format_source(source)} Power Plant Opened: {format_decision(opened)}", unsafe_allow_html=True)
 
     # Display data for a specific year
-    def display_year_data(year):
+    else:
         col1, col2 = st.columns(2)
 
         with col1:
-            st.subheader(f"Power Plant Opening Decisions in {year}")
-            for source, opened in decisions.get(year, {}).items():
-                st.markdown(f"{source} Power Plant Opened: {opened}")
+            st.subheader(f"Power Plant Opening Decisions in {selected_year}")
+            for source, opened in decisions.get(selected_year, {}).items():
+                st.markdown(f"{format_source(source)} Power Plant Opened: {format_decision(opened)}", unsafe_allow_html=True)
 
-            st.subheader(f"Added Capacities in {year}")
-            year_capacities = capacities.get(year, {})
+            st.subheader(f"Added Capacities in {selected_year}")
+            year_capacities = capacities.get(selected_year, {})
             for source, capacity in year_capacities.items():
-                st.markdown(f"{source} Added Capacity: {capacity} GWh")
+                st.markdown(f"{format_source(source)} Added Capacity: {format_value(capacity, 'blue')} GWh", unsafe_allow_html=True)
 
         with col2:
-            st.subheader(f"Associated Costs in {year}")
-            year_costs = costs.get(year, {})
+            st.subheader(f"Associated Costs in {selected_year}")
+            year_costs = costs.get(selected_year, {})
             for source, cost in year_costs.items():
-                st.markdown(f"{source} Cost: {cost} CAD")
+                st.markdown(f"{format_source(source)} Cost: {format_value(cost, 'blue')} CAD", unsafe_allow_html=True)
 
-            st.subheader(f"Emission Deviations in {year}")
-            st.markdown(f"Emission Deviation: {deviations.get(year, 'N/A')} MTCO2e")
-
-    # Logic to display data based on selected year
-    if selected_year == 'All':
-        display_aggregated_data()
-        display_all_decisions()
-    else:
-        display_year_data(selected_year)
-
-# Ensure the rest of your Streamlit app code is appropriately placed
+            st.subheader(f"Emission Deviations in {selected_year}")
+            st.markdown(f"Emission Deviation: {format_value(deviations.get(selected_year, 'N/A'), 'red')} MTCO2e", unsafe_allow_html=True)
