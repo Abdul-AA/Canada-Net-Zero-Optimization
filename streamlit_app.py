@@ -87,61 +87,68 @@ with tab1:
         st.dataframe(filtered_df)
 
 
-# Second page of the app
 import streamlit as st
 
 # Second page of the app
 with tab2:
     st.title("Power Plant Decisions and Impacts")
 
+    # Year filter
+    year_options = [2025, 2030, 2035]
+    selected_year = st.selectbox("Select Year", options=year_options)
+
     # Top containers for binary decisions and added capacities
     container1, container2 = st.columns(2)
 
+    # Data for binary decisions, capacities, and costs
+    decisions = {
+        2025: {'Wind': 'No', 'Solar': 'No', 'Nuclear': 'No'},
+        2030: {'Wind': 'Yes', 'Solar': 'No', 'Nuclear': 'Yes'},
+        2035: {'Wind': 'Yes', 'Solar': 'No', 'Nuclear': 'No'}
+    }
+
+    capacities = {
+        2030: {'Wind': 43800, 'Solar': 0, 'Nuclear': 48180},
+        2035: {'Wind': 43800, 'Solar': 0, 'Nuclear': 0}
+    }
+
+    costs = {
+        2030: {'Wind': 8220000000, 'Nuclear': 9590000000},
+        2035: {'Wind': 8220000000}
+    }
+
+    deviations = {2025: 0.0, 2030: 0.0, 2035: 1e-06}
+
     with container1:
         st.subheader("Power Plant Opening Decisions")
-        # Display binary decisions
-        decisions_2025 = {'Wind': 'No', 'Solar': 'No', 'Nuclear': 'No'}
-        decisions_2030 = {'Wind': 'Yes', 'Solar': 'No', 'Nuclear': 'Yes'}
-        decisions_2035 = {'Wind': 'Yes', 'Solar': 'No', 'Nuclear': 'No'}
-        years_decisions = {2025: decisions_2025, 2030: decisions_2030, 2035: decisions_2035}
-
-        for year, decisions in years_decisions.items():
-            st.markdown(f"#### Year {year}")
-            for source, opened in decisions.items():
-                st.markdown(f"{source} Power Plant Opened: {opened}")
+        # Display binary decisions for selected year
+        for source, opened in decisions[selected_year].items():
+            st.markdown(f"{source} Power Plant Opened: {opened}")
 
     with container2:
         st.subheader("Added Capacities")
-        # Display added capacities
-        capacities_2030 = {'Wind': 43800, 'Solar': 0, 'Nuclear': 48180}
-        capacities_2035 = {'Wind': 43800, 'Solar': 0, 'Nuclear': 0}
-        years_capacities = {2030: capacities_2030, 2035: capacities_2035}
-
-        for year, capacities in years_capacities.items():
-            st.markdown(f"#### Year {year}")
-            for source, capacity in capacities.items():
+        # Display added capacities for selected year
+        if selected_year in capacities:
+            for source, capacity in capacities[selected_year].items():
                 st.markdown(f"{source} Added Capacity: {capacity} GWh")
+        else:
+            st.markdown("No added capacities in this year")
 
     # Bottom containers for costs and emission deviation
     container3, container4 = st.columns(2)
 
     with container3:
         st.subheader("Associated Costs")
-        # Display costs
-        costs_2030 = {'Wind': 8220000000, 'Nuclear': 9590000000}
-        costs_2035 = {'Wind': 8220000000}
-        years_costs = {2030: costs_2030, 2035: costs_2035}
-
-        for year, costs in years_costs.items():
-            st.markdown(f"#### Year {year}")
-            for source, cost in costs.items():
+        # Display costs for selected year
+        if selected_year in costs:
+            for source, cost in costs[selected_year].items():
                 st.markdown(f"{source} Cost: {cost} CAD")
+        else:
+            st.markdown("No associated costs in this year")
 
     with container4:
         st.subheader("Emission Deviations")
-        # Display emission deviations
-        deviations = {2025: 0.0, 2030: 0.0, 2035: 1e-06}
-        for year, deviation in deviations.items():
-            st.markdown(f"Emission Deviation for {year}: {deviation} MTCO2e")
+        # Display emission deviations for selected year
+        st.markdown(f"Emission Deviation for {selected_year}: {deviations[selected_year]} MTCO2e")
 
 # Ensure the rest of your Streamlit app code is appropriately placed
