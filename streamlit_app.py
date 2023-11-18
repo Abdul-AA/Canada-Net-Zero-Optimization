@@ -177,10 +177,10 @@ with tab2:
                 st.metric(label=f"{source} Capacity (GWh)", value=f"{capacity}")
 
         with bottom_left:
-            st.subheader(f"Capital Investment Cost in {selected_year}")
+            st.subheader(f"Capital Investment Costs in {selected_year}")
             year_costs = costs.get(selected_year, {})
             for source, cost in year_costs.items():
-                st.metric(label=f"{source} Cost (CAD)", value=f"${cost:,.2f}")
+                st.metric(label=f"{source} (CAD)", value=f"${cost:,.2f}")
 
         with bottom_right:
             st.subheader(f"Emission Deviations in {selected_year}")
