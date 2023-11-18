@@ -127,45 +127,46 @@ deviations = {2025: 0.0, 2030: 0.0, 2035: 1e-06}
 # Tab 2 Content
 with tab2:
     with st.container():
-    st.title("Power Plant Decisions and Impacts")
-
-    # Year filter with 'All' option
-    year_options = ['All', 2025, 2030, 2035]
-    selected_year = st.selectbox("Select Year", options=year_options)
-
-    # Display aggregated data for 'All' years
-    if selected_year == 'All':
-        agg_capacities, agg_costs = aggregate_data(capacities, costs)
-
-        # Using st.metric for aggregated data display
-        st.subheader("Aggregated Data Across All Years")
-        col1, col2 = st.columns(2)
-        for source, capacity in agg_capacities.items():
-            col1.metric(label=f"{source} Capacity (GWh)", value=f"{capacity}")
-        for source, cost in agg_costs.items():
-            col2.metric(label=f"{source} Cost (CAD)", value=f"${cost:,.2f}")
-
-        # Power Plant Opening Decisions
-        for year, year_decisions in decisions.items():
-            with st.container():
-                st.subheader(f"Power Plant Opening Decisions in {year}")
-                for source, opened in year_decisions.items():
+        
+        st.title("Power Plant Decisions and Impacts")
+    
+        # Year filter with 'All' option
+        year_options = ['All', 2025, 2030, 2035]
+        selected_year = st.selectbox("Select Year", options=year_options)
+    
+        # Display aggregated data for 'All' years
+        if selected_year == 'All':
+            agg_capacities, agg_costs = aggregate_data(capacities, costs)
+    
+            # Using st.metric for aggregated data display
+            st.subheader("Aggregated Data Across All Years")
+            col1, col2 = st.columns(2)
+            for source, capacity in agg_capacities.items():
+                col1.metric(label=f"{source} Capacity (GWh)", value=f"{capacity}")
+            for source, cost in agg_costs.items():
+                col2.metric(label=f"{source} Cost (CAD)", value=f"${cost:,.2f}")
+    
+            # Power Plant Opening Decisions
+            for year, year_decisions in decisions.items():
+                with st.container():
+                    st.subheader(f"Power Plant Opening Decisions in {year}")
+                    for source, opened in year_decisions.items():
+                        st.markdown(f"{format_source(source)} Power Plant Opened: {format_decision(opened)}", unsafe_allow_html=True)
+    
+        # Display data for a specific year
+        else:
+            col1, col2 = st.columns(2)
+            with col1:
+                st.subheader(f"Power Plant Opening Decisions in {selected_year}")
+                for source, opened in decisions.get(selected_year, {}).items():
                     st.markdown(f"{format_source(source)} Power Plant Opened: {format_decision(opened)}", unsafe_allow_html=True)
-
-    # Display data for a specific year
-    else:
-        col1, col2 = st.columns(2)
-        with col1:
-            st.subheader(f"Power Plant Opening Decisions in {selected_year}")
-            for source, opened in decisions.get(selected_year, {}).items():
-                st.markdown(f"{format_source(source)} Power Plant Opened: {format_decision(opened)}", unsafe_allow_html=True)
-
-        with col2:
-            st.subheader(f"Details for {selected_year}")
-            year_capacities = capacities.get(selected_year, {})
-            year_costs = costs.get(selected_year, {})
-            for source in year_capacities:
-                col2.metric(label=f"{source} Capacity (GWh)", value=f"{year_capacities[source]}")
-                col2.metric(label=f"{source} Cost (CAD)", value=f"${year_costs.get(source, 0):,.2f}")
-
-            st.markdown(f"Emission Deviation: {format_value(deviations.get(selected_year, 'N/A'), 'red')}", unsafe_allow_html=True)
+    
+            with col2:
+                st.subheader(f"Details for {selected_year}")
+                year_capacities = capacities.get(selected_year, {})
+                year_costs = costs.get(selected_year, {})
+                for source in year_capacities:
+                    col2.metric(label=f"{source} Capacity (GWh)", value=f"{year_capacities[source]}")
+                    col2.metric(label=f"{source} Cost (CAD)", value=f"${year_costs.get(source, 0):,.2f}")
+    
+                st.markdown(f"Emission Deviation: {format_value(deviations.get(selected_year, 'N/A'), 'red')}", unsafe_allow_html=True)
