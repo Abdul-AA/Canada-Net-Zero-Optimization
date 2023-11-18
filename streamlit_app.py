@@ -191,6 +191,17 @@ with tab2:
         with col3:
             st.metric(label="Total Emission Deviation", value=f"{total_deviation} MTCO2e")
             
+@st.cache
+def convert_df_to_csv(df):
+    return df.to_csv().encode('utf-8')
+
+csv = convert_df_to_csv(filtered_df)  # Assuming 'filtered_df' is your DataFrame
+st.download_button(
+    label="Download data as CSV",
+    data=csv,
+    file_name='dashboard_data.csv',
+    mime='text/csv',
+)
 
 # Run the Streamlit app (uncomment this line if running the script directly)
 # st.run()
