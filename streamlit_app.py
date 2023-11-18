@@ -59,12 +59,12 @@ with tab1:
     
     # KPIs
     total_emission = filtered_df['Emissions (MTCO2e)'].sum()
-    total_cost = filtered_df['Cost (USD)'].sum()
+    total_cost = filtered_df['Cost (CAD)'].sum()
     
     # Layout using containers and columns
     kpi1, kpi2 = st.columns(2)
     kpi1.metric("Total Emissions (MTCO2e)", f"{total_emission:.2f}")
-    kpi2.metric("Total Cost (USD)", f"${total_cost:,.2f}")
+    kpi2.metric("Total Cost (CAD)", f"${total_cost:,.2f}")
     
     # Charts layout
     chart1, chart2 = st.columns(2)
@@ -80,7 +80,7 @@ with tab1:
     col1, col2 = st.columns(2)
     with col1:
         st.markdown("### Cost by Source")
-        fig3 = px.bar(filtered_df, x='Source', y='Cost (USD)', color='Source')
+        fig3 = px.bar(filtered_df, x='Source', y='Cost (CAD)', color='Source')
         st.plotly_chart(fig3)
     with col2:
         st.markdown("### Detailed Data View")
