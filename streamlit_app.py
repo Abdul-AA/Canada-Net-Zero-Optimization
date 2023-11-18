@@ -74,7 +74,7 @@ with tab1:
     with chart1:
         st.markdown("### Generation by Source")
         fig1 = px.bar(filtered_df.sort_values('Generation (GWh)', ascending=False), x='Source', y='Generation (GWh)', color='Source')
-        fig1.update_layout(showlegend=False)
+        #fig1.update_layout(showlegend=False)
         st.plotly_chart(fig1)
     
     with chart2:
@@ -85,7 +85,7 @@ with tab1:
     with col1:
         st.markdown("### Cost by Source")
         fig3 = px.bar(filtered_df.sort_values('Cost (CAD)', ascending=False), x='Source', y='Cost (CAD)', color='Source')
-        fig3.update_layout(showlegend=False)
+        #fig3.update_layout(showlegend=False)
         st.plotly_chart(fig3)
     with col2:
         st.markdown("### Detailed Data View")
@@ -196,12 +196,21 @@ def convert_df_to_csv(df):
     return df.to_csv().encode('utf-8')
 
 csv = convert_df_to_csv(filtered_df)  # Assuming 'filtered_df' is your DataFrame
-st.download_button(
-    label="Download data as CSV",
-    data=csv,
-    file_name='dashboard_data.csv',
-    mime='text/csv',
-)
+col1,col2=st.columns(2)
+with co1:
+    st.download_button(
+        label="Download data as CSV",
+        data=csv,
+        file_name='dashboard_data.csv',
+        mime='text/csv',
+    )
+with col2
+    st.markdown(
+        """
+        For more details, check out our [Emissions Optimization Model on GitHub](
+        https://github.com/Abdul-AA/Canada-Net-Zero-Optimization/blob/ab3119a7f5e75549d755cf47834c20b60925d91d/Emissions%20Optimization%20Model.ipynb).
+        """
+    )
 
 # Run the Streamlit app (uncomment this line if running the script directly)
 # st.run()
