@@ -197,7 +197,7 @@ def convert_df_to_csv(df):
 
 csv = convert_df_to_csv(filtered_df)  # Assuming 'filtered_df' is your DataFrame
 col1,col2=st.columns(2)
-with co1:
+with col1:
     st.download_button(
         label="Download data as CSV",
         data=csv,
