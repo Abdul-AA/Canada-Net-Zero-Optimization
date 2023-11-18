@@ -88,6 +88,9 @@ with tab1:
 
 
 # Second page of the app
+import streamlit as st
+
+# Second page of the app
 with tab2:
     st.title("Power Plant Decisions and Impacts")
 
@@ -105,7 +108,7 @@ with tab2:
         for year, decisions in years_decisions.items():
             st.markdown(f"#### Year {year}")
             for source, opened in decisions.items():
-                st.markdown(f"<span style='color: {colors[source]};'>{source} Power Plant Opened: {opened}</span>", unsafe_allow_html=True)
+                st.markdown(f"{source} Power Plant Opened: {opened}")
 
     with container2:
         st.subheader("Added Capacities")
@@ -117,7 +120,7 @@ with tab2:
         for year, capacities in years_capacities.items():
             st.markdown(f"#### Year {year}")
             for source, capacity in capacities.items():
-                st.markdown(f"<span style='color: {colors[source]};'>{source} Added Capacity: {capacity} GWh</span>", unsafe_allow_html=True)
+                st.markdown(f"{source} Added Capacity: {capacity} GWh")
 
     # Bottom containers for costs and emission deviation
     container3, container4 = st.columns(2)
@@ -132,7 +135,7 @@ with tab2:
         for year, costs in years_costs.items():
             st.markdown(f"#### Year {year}")
             for source, cost in costs.items():
-                st.markdown(f"<span style='color: {colors[source]};'>{source} Cost: {cost} CAD</span>", unsafe_allow_html=True)
+                st.markdown(f"{source} Cost: {cost} CAD")
 
     with container4:
         st.subheader("Emission Deviations")
