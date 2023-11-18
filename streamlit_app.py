@@ -39,9 +39,8 @@ def create_dataframe():
     return pd.concat([df_2025, df_2030, df_2035], ignore_index=True)
 
 df = create_dataframe()
-tab1, tab2=st.tabs(2)
 # Dashboard title
-with tab1:
+
     st.title("Net Zero Emissions Dashboard")
     
     # Sidebar for filters
