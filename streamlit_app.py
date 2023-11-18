@@ -127,7 +127,6 @@ deviations = {2025: 0.0, 2030: 0.0, 2035: 1e-06}
 
 
 
-import streamlit as st
 
 with st.container() as tab2:
     st.title("Power Plant Decisions and Impacts")
@@ -164,19 +163,25 @@ with st.container() as tab2:
     if selected_year != 'All':
         idx = year_options.index(selected_year) - 1
         col1, col2 = st.columns(2)
-
+    
+        total_yearly_expenditure = 0  # Initialize total expenditure for the year
+    
         for source in ['Wind', 'Solar', 'Nuclear']:
             num_decisions = capacity_decision[source][idx]
             if num_decisions > 0:  # Only display non-zero metrics
                 total_capacity = capacity_added[source] * num_decisions
                 total_cost = increase_cost[source] * num_decisions
-
+                total_yearly_expenditure += total_cost  # Accumulate total expenditure
+    
                 with col1:
                     st.metric(label=f"{selected_year} {source} Capacity Increases", value=f"{num_decisions}")
                     st.metric(label="Total Capacity Added (GWh)", value=f"{total_capacity}")
-
+    
                 with col2:
-                    st.metric(label="Total Cost (CAD)", value=f"${total_cost:,.2f}")
+                    st.metric(label=f"Total Cost {source} (CAD)", value=f"${total_cost:,.2f}")
+                    st.metric(label=f"Total Expenditure for {selected_year} (CAD)", value=f"${total_yearly_expenditure:,.2f}")
+
+
 
         emission_deviation = emission_deviations[idx]
         st.metric(label=f"{selected_year} Emission Deviation", value=f"{emission_deviation} MTCO2e")
