@@ -48,7 +48,7 @@ def create_dataframe_updated():
 df = create_dataframe_updated()
 df['Cost (CAD)']=df['Generation Cost (CAD)']+df['Capacity Investment Cost (CAD)']
 
-tab1, tab2,tab3 = st.tabs([" Optimal Allocations", "Capacity Decisions & Emissions", "Interactive Bubble Charts"])
+tab1, tab2,tab3,tab4,tab5 = st.tabs([" Optimal Allocations", "Capacity Decisions & Emissions", "Emissions Bubble Charts", "Generation Bubble Chart", "Cost Bubble Charts"])
 with tab1:
 # Dashboard title
     st.title("Canada Net Zero")
@@ -201,17 +201,20 @@ def convert_df_to_csv(df):
 csv = convert_df_to_csv(filtered_df)  # Assuming 'filtered_df' is your DataFrame
 
 with tab3:
-    st.title("Interactive Bubble Charts")
+    st.title("Emissions by Source")
+    fig1 = create_bubble_chart(filtered_df, 'Source', 'Emissions (MTCO2e)', 'Emissions (MTCO2e)', 'Source')
+    st.plotly_chart(fig1)
+with tab4:
+    st.title("Generation by Source")
+    fig2 = create_bubble_chart(filtered_df, 'Source', 'Generation (GWh)', 'Generation (GWh)', 'Source')
+    st.plotly_chart(fig2)
 
-    # User selections for the bubble chart
-    x_options = st.selectbox("Select X-axis", options=df.columns)
-    y_options = st.selectbox("Select Y-axis", options=df.columns)
-    size_options = st.selectbox("Select Size Parameter", options=df.columns)
-    color_options = st.selectbox("Select Color Parameter", options=df.columns)
+with tab5:
+    st.title("Total Cost by Source")
+    fig3 = create_bubble_chart(filtered_df, 'Source', 'Cost (CAD)', 'Cost (CAD)', 'Source')
+    st.plotly_chart(fig3)
 
-    # Generate and display the bubble chart
-    bubble_chart = create_bubble_chart(df, x_options, y_options, size_options, color_options)
-    st.plotly_chart(bubble_chart)
+
     
 col1,col2=st.columns(2)
 with col1:
