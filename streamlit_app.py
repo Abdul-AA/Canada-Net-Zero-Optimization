@@ -201,13 +201,13 @@ def convert_df_to_csv(df):
 csv = convert_df_to_csv(filtered_df)  # Assuming 'filtered_df' is your DataFrame
 
 year_options = ['All'] + sorted(df['Year'].unique().tolist())
-    year_filter = st.selectbox("Select Year", options=year_options)
+year_filter = st.selectbox("Select Year", options=year_options)
     
     # Filter the DataFrame based on the selected year
-    if year_filter != 'All':
-        filtered_df = df[df['Year'] == year_filter]
-    else:
-        filtered_df = df
+if year_filter != 'All':
+    filtered_df = df[df['Year'] == year_filter]
+else:
+    filtered_df = df
 
 with tab3:
     
