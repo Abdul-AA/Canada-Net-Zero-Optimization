@@ -99,14 +99,22 @@ def format_decision(decision):
 
 
 def create_bubble_chart(data, x_column, y_column, size_column, color_column):
-    # Apply a scaling factor to the size data
     size_scale = 100  # Adjust this scale factor as needed
     data = data.copy()
     data[size_column] *= size_scale
 
     fig = px.scatter(data, x=x_column, y=y_column, size=size_column, color=color_column,
-                     hover_name=color_column, size_max=80)  # Adjusted size_max
+                     hover_name=color_column, size_max=80)
+
+    # Update layout for larger chart size and remove x-axis labels
+    fig.update_layout(
+        width=800,  # Set the width of the chart
+        height=600,  # Set the height of the chart
+        xaxis=dict(showticklabels=False)  # Hide x-axis labels
+    )
+
     return fig
+
 
 
 
@@ -209,7 +217,7 @@ csv = convert_df_to_csv(filtered_df)  # Assuming 'filtered_df' is your DataFrame
 
 
 with tab3:
-    year_options = ['All'] + sorted(df['Year'].unique().tolist())
+    year_options = sorted(df['Year'].unique().tolist())
     year_filter = st.selectbox("Select Year", options=year_options, key='t3')
     
     # Filter the DataFrame based on the selected year
@@ -223,7 +231,7 @@ with tab3:
     fig1 = create_bubble_chart(filtered_df, 'Source', 'Emissions (MTCO2e)', 'Emissions (MTCO2e)', 'Source')
     st.plotly_chart(fig1)
 with tab4:
-    year_options = ['All'] + sorted(df['Year'].unique().tolist())
+    year_options = sorted(df['Year'].unique().tolist())
     year_filter = st.selectbox("Select Year", options=year_options, key='t4')
     
     # Filter the DataFrame based on the selected year
@@ -238,7 +246,7 @@ with tab4:
     st.plotly_chart(fig2)
 
 with tab5:
-    year_options = ['All'] + sorted(df['Year'].unique().tolist())
+    year_options = sorted(df['Year'].unique().tolist())
     year_filter = st.selectbox("Select Year", options=year_options, key='t5')
     
     # Filter the DataFrame based on the selected year
