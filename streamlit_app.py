@@ -99,9 +99,15 @@ def format_decision(decision):
 
 
 def create_bubble_chart(data, x_column, y_column, size_column, color_column):
+    # Apply a scaling factor to the size data
+    size_scale = 100  # Adjust this scale factor as needed
+    data = data.copy()
+    data[size_column] *= size_scale
+
     fig = px.scatter(data, x=x_column, y=y_column, size=size_column, color=color_column,
-                     hover_name=color_column, log_x=True, size_max=60)
+                     hover_name=color_column, size_max=80)  # Adjusted size_max
     return fig
+
 
 
 
@@ -226,9 +232,7 @@ with tab4:
     else:
         filtered_df = df
     
-    st.title("Emissions by Source")
-    fig1 = create_bubble_chart(filtered_df, 'Source', 'Emissions (MTCO2e)', 'Emissions (MTCO2e)', 'Source')
-    st.plotly_chart(fig1)
+    
     st.title("Generation by Source")
     fig2 = create_bubble_chart(filtered_df, 'Source', 'Generation (GWh)', 'Generation (GWh)', 'Source')
     st.plotly_chart(fig2)
@@ -243,9 +247,7 @@ with tab5:
     else:
         filtered_df = df
     
-    st.title("Emissions by Source")
-    fig1 = create_bubble_chart(filtered_df, 'Source', 'Emissions (MTCO2e)', 'Emissions (MTCO2e)', 'Source')
-    st.plotly_chart(fig1)
+    
     st.title("Total Cost by Source")
     fig3 = create_bubble_chart(filtered_df, 'Source', 'Cost (CAD)', 'Cost (CAD)', 'Source')
     st.plotly_chart(fig3)
