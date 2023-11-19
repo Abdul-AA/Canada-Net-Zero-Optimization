@@ -200,23 +200,31 @@ def convert_df_to_csv(df):
 
 csv = convert_df_to_csv(filtered_df)  # Assuming 'filtered_df' is your DataFrame
 
-year_options = ['All'] + sorted(df['Year'].unique().tolist())
-year_filter = st.selectbox("Select Year", options=year_options)
-    
-    # Filter the DataFrame based on the selected year
-if year_filter != 'All':
-    filtered_df = df[df['Year'] == year_filter]
-else:
-    filtered_df = df
+
 
 with tab3:
+    year_options = ['All'] + sorted(df['Year'].unique().tolist())
+    year_filter = st.selectbox("Select Year", options=year_options, key='t3')
+    
+    # Filter the DataFrame based on the selected year
+    if year_filter != 'All':
+        filtered_df = df[df['Year'] == year_filter]
+    else:
+        filtered_df = df
     
     
     st.title("Emissions by Source")
     fig1 = create_bubble_chart(filtered_df, 'Source', 'Emissions (MTCO2e)', 'Emissions (MTCO2e)', 'Source')
     st.plotly_chart(fig1)
 with tab4:
+    year_options = ['All'] + sorted(df['Year'].unique().tolist())
+    year_filter = st.selectbox("Select Year", options=year_options, key='t4')
     
+    # Filter the DataFrame based on the selected year
+    if year_filter != 'All':
+        filtered_df = df[df['Year'] == year_filter]
+    else:
+        filtered_df = df
     
     st.title("Emissions by Source")
     fig1 = create_bubble_chart(filtered_df, 'Source', 'Emissions (MTCO2e)', 'Emissions (MTCO2e)', 'Source')
@@ -226,7 +234,14 @@ with tab4:
     st.plotly_chart(fig2)
 
 with tab5:
+    year_options = ['All'] + sorted(df['Year'].unique().tolist())
+    year_filter = st.selectbox("Select Year", options=year_options, key='t5')
     
+    # Filter the DataFrame based on the selected year
+    if year_filter != 'All':
+        filtered_df = df[df['Year'] == year_filter]
+    else:
+        filtered_df = df
     
     st.title("Emissions by Source")
     fig1 = create_bubble_chart(filtered_df, 'Source', 'Emissions (MTCO2e)', 'Emissions (MTCO2e)', 'Source')
