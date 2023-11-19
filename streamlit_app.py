@@ -4,7 +4,7 @@ import pandas as pd
 
 # Set page config
 st.set_page_config(page_title="Canada Net Zero", page_icon="🌍", layout="wide")
-
+nuc=9590000000.0*2
 
 def create_dataframe_updated():
     # Updated data as per the provided model results
@@ -32,7 +32,7 @@ def create_dataframe_updated():
         'Generation (GWh)': [239372.75, 0.0, 0.0, 271351.37, 277116.99, 0.0, 0.0, 0.0],
         'Emissions (MTCO2e)': [3.59059126, 0.0, 0.0, 3.25621644, 6.65080775, 0.0, 0.0, 0.0],
         'Generation Cost (CAD)': [19348499414.04, 0.0, 0.0, 24163839498.5, 8352306066.84, 0.0, 0.0, 0.0],
-        'Capacity Investment Cost (CAD)': [8220000000.0, 0, 0, 9590000000.0, 0, 0, 0, 0]
+        'Capacity Investment Cost (CAD)': [8220000000.0, 0, 0, nuc, 0, 0, 0, 0]
     }
     
     # Combine all data into one DataFrame
