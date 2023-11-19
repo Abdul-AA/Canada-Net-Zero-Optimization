@@ -147,11 +147,11 @@ with tab2:
     capacity_decision = {
         'Wind': [0, 2, 2],  # Two plants in 2030 and two more in 2035
         'Solar': [0, 0, 0],  # No plants
-        'Nuclear': [0, 1, 0]  # One plant in 2030
+        'Nuclear': [0, 2, 2]  # One plant in 2030
     }
 
     # Emission deviations
-    emission_deviations = [0.0, 0.0, 1.0001e-06]
+    emission_deviations = [6.0, 0.0, 13.5]
 
     # Logic for individual years
     if selected_year != 'All':
