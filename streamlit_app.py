@@ -48,12 +48,11 @@ def create_dataframe_updated():
 df = create_dataframe_updated()
 df['Cost (CAD)']=df['Generation Cost (CAD)']+df['Capacity Investment Cost (CAD)']
 
-tab1, tab2 = st.tabs([" Optimal Allocations", "Capacity Decisions & Emissions"])
+tab1, tab2,tab3 = st.tabs([" Optimal Allocations", "Capacity Decisions & Emissions", "Interactive Bubble Charts"])
 with tab1:
 # Dashboard title
     st.title("Canada Net Zero")
     
-    # Sidebar for filters
     year_options = ['All'] + sorted(df['Year'].unique().tolist())
     year_filter = st.selectbox("Select the Year", options=year_options)
     if year_filter == 'All':
@@ -99,7 +98,10 @@ def format_decision(decision):
     return f"<span style='color: {color};'>{decision}</span>"
 
 
-
+def create_bubble_chart(data, x_column, y_column, size_column, color_column):
+    fig = px.scatter(data, x=x_column, y=y_column, size=size_column, color=color_column,
+                     hover_name=color_column, log_x=True, size_max=60)
+    return fig
 
 
 
@@ -197,6 +199,20 @@ def convert_df_to_csv(df):
     return df.to_csv().encode('utf-8')
 
 csv = convert_df_to_csv(filtered_df)  # Assuming 'filtered_df' is your DataFrame
+
+with tab3:
+    st.title("Interactive Bubble Charts")
+
+    # User selections for the bubble chart
+    x_options = st.selectbox("Select X-axis", options=df.columns)
+    y_options = st.selectbox("Select Y-axis", options=df.columns)
+    size_options = st.selectbox("Select Size Parameter", options=df.columns)
+    color_options = st.selectbox("Select Color Parameter", options=df.columns)
+
+    # Generate and display the bubble chart
+    bubble_chart = create_bubble_chart(df, x_options, y_options, size_options, color_options)
+    st.plotly_chart(bubble_chart)
+    
 col1,col2=st.columns(2)
 with col1:
     st.download_button(
@@ -212,6 +228,7 @@ with col2:
         https://github.com/Abdul-AA/Canada-Net-Zero-Optimization/blob/ab3119a7f5e75549d755cf47834c20b60925d91d/Emissions%20Optimization%20Model.ipynb).
         """
     )
+
 
 # Run the Streamlit app (uncomment this line if running the script directly)
 # st.run()
