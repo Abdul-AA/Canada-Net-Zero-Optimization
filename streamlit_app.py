@@ -99,9 +99,9 @@ def format_decision(decision):
 
 
 def create_bubble_chart(data, x_column, y_column, size_column, color_column):
-    size_scale = 100  # Adjust this scale factor as needed
+    #size_scale = 100  # Adjust this scale factor as needed
     data = data.copy()
-    data[size_column] *= size_scale
+    #data[size_column] *= size_scale
 
     fig = px.scatter(data, x=x_column, y=y_column, size=size_column, color=color_column,
                      hover_name=color_column, size_max=80)
