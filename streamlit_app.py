@@ -202,7 +202,7 @@ csv = convert_df_to_csv(filtered_df)  # Assuming 'filtered_df' is your DataFrame
 
 with tab3:
     year_options = ['All'] + sorted(df['Year'].unique().tolist())
-    year_filter = st.sidebar.selectbox("Select Year", options=year_options)
+    year_filter = st.selectbox("Select Year", options=year_options)
     
     # Filter the DataFrame based on the selected year
     if year_filter != 'All':
@@ -215,7 +215,7 @@ with tab3:
     st.plotly_chart(fig1)
 with tab4:
     year_options = ['All'] + sorted(df['Year'].unique().tolist())
-    year_filter = st.sidebar.selectbox("Select Year", options=year_options)
+    year_filter = st.selectbox("Select Year", options=year_options)
     
     # Filter the DataFrame based on the selected year
     if year_filter != 'All':
@@ -232,7 +232,7 @@ with tab4:
 
 with tab5:
     year_options = ['All'] + sorted(df['Year'].unique().tolist())
-    year_filter = st.sidebar.selectbox("Select Year", options=year_options)
+    year_filter = st.selectbox("Select Year", options=year_options)
     
     # Filter the DataFrame based on the selected year
     if year_filter != 'All':
