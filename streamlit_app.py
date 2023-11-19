@@ -201,15 +201,48 @@ def convert_df_to_csv(df):
 csv = convert_df_to_csv(filtered_df)  # Assuming 'filtered_df' is your DataFrame
 
 with tab3:
+    year_options = ['All'] + sorted(df['Year'].unique().tolist())
+    year_filter = st.sidebar.selectbox("Select Year", options=year_options)
+    
+    # Filter the DataFrame based on the selected year
+    if year_filter != 'All':
+        filtered_df = df[df['Year'] == year_filter]
+    else:
+        filtered_df = df
+    
     st.title("Emissions by Source")
     fig1 = create_bubble_chart(filtered_df, 'Source', 'Emissions (MTCO2e)', 'Emissions (MTCO2e)', 'Source')
     st.plotly_chart(fig1)
 with tab4:
+    year_options = ['All'] + sorted(df['Year'].unique().tolist())
+    year_filter = st.sidebar.selectbox("Select Year", options=year_options)
+    
+    # Filter the DataFrame based on the selected year
+    if year_filter != 'All':
+        filtered_df = df[df['Year'] == year_filter]
+    else:
+        filtered_df = df
+    
+    st.title("Emissions by Source")
+    fig1 = create_bubble_chart(filtered_df, 'Source', 'Emissions (MTCO2e)', 'Emissions (MTCO2e)', 'Source')
+    st.plotly_chart(fig1)
     st.title("Generation by Source")
     fig2 = create_bubble_chart(filtered_df, 'Source', 'Generation (GWh)', 'Generation (GWh)', 'Source')
     st.plotly_chart(fig2)
 
 with tab5:
+    year_options = ['All'] + sorted(df['Year'].unique().tolist())
+    year_filter = st.sidebar.selectbox("Select Year", options=year_options)
+    
+    # Filter the DataFrame based on the selected year
+    if year_filter != 'All':
+        filtered_df = df[df['Year'] == year_filter]
+    else:
+        filtered_df = df
+    
+    st.title("Emissions by Source")
+    fig1 = create_bubble_chart(filtered_df, 'Source', 'Emissions (MTCO2e)', 'Emissions (MTCO2e)', 'Source')
+    st.plotly_chart(fig1)
     st.title("Total Cost by Source")
     fig3 = create_bubble_chart(filtered_df, 'Source', 'Cost (CAD)', 'Cost (CAD)', 'Source')
     st.plotly_chart(fig3)
