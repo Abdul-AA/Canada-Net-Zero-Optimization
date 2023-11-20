@@ -50,7 +50,7 @@ def create_dataframe_updated():
 df = create_dataframe_updated()
 df['Cost (CAD)']=df['Generation Cost (CAD)']+df['Capacity Investment Cost (CAD)']
 
-tab1, tab2,tab3 = st.tabs([" Optimal Allocations", "Capacity Decisions & Emissions", "Interactive Detailed Chart"])
+tab1, tab2,tab3 = st.tabs([" Optimal Allocations", "Capacity Decisions & Emissions", "Detailed Interactive Chart"])
 with tab1:
 # Dashboard title
     st.title("Canada Net Zero")
