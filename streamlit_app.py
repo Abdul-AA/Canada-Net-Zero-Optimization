@@ -50,7 +50,7 @@ def create_dataframe_updated():
 df = create_dataframe_updated()
 df['Cost (CAD)']=df['Generation Cost (CAD)']+df['Capacity Investment Cost (CAD)']
 
-tab1, tab2,tab3,tab4,tab5 = st.tabs([" Optimal Allocations", "Capacity Decisions & Emissions", "Emissions Bubble Charts", "Generation Bubble Chart", "Cost Bubble Charts"])
+tab1, tab2,tab3 = st.tabs([" Optimal Allocations", "Capacity Decisions & Emissions", "Interactive Detailed Chart"])
 with tab1:
 # Dashboard title
     st.title("Canada Net Zero")
@@ -110,8 +110,8 @@ def create_bubble_chart(data, x_column, y_column, size_column, color_column):
 
     # Update layout for larger chart size and remove x-axis labels
     fig.update_layout(
-        width=1000,  # Set the width of the chart
-        height=700,  # Set the height of the chart
+        width=800,  # Set the width of the chart
+        height=600,  # Set the height of the chart
         xaxis=dict(showticklabels=True)  # Hide x-axis labels
     )
 
@@ -230,38 +230,38 @@ with tab3:
     
 
     
-    st.title("Emissions by Source")
+    st.title("Contributions by Source")
     fig1 = create_bubble_chart(filtered_df, 'Cost (CAD)', 'Generation (GWh)', 'Emissions (MTCO2e)', 'Source')
     st.plotly_chart(fig1)
-with tab4:
-    year_options = sorted(df['Year'].unique().tolist())
-    year_filter = st.selectbox("Select Year", options=year_options, key='t4')
+#with tab4:
+    #year_options = sorted(df['Year'].unique().tolist())
+    #year_filter = st.selectbox("Select Year", options=year_options, key='t4')
     
     # Filter the DataFrame based on the selected year
-    if year_filter != 'All':
-        filtered_df = df[df['Year'] == year_filter]
-    else:
-        filtered_df = df
+   # if year_filter != 'All':
+        #filtered_df = df[df['Year'] == year_filter]
+    #else:
+       # filtered_df = df
     
     
-    st.title("Generation by Source")
-    fig2 = create_bubble_chart(filtered_df, 'Source', 'Generation (GWh)', 'Generation (GWh)', 'Source')
-    st.plotly_chart(fig2)
+   # st.title("Generation by Source")
+   # fig2 = create_bubble_chart(filtered_df, 'Source', 'Generation (GWh)', 'Generation (GWh)', 'Source')
+   # st.plotly_chart(fig2)
 
-with tab5:
-    year_options = sorted(df['Year'].unique().tolist())
-    year_filter = st.selectbox("Select Year", options=year_options, key='t5')
+#with tab5:
+    #year_options = sorted(df['Year'].unique().tolist())
+    #year_filter = st.selectbox("Select Year", options=year_options, key='t5')
     
     # Filter the DataFrame based on the selected year
-    if year_filter != 'All':
-        filtered_df = df[df['Year'] == year_filter]
-    else:
-        filtered_df = df
+   # if year_filter != 'All':
+        #filtered_df = df[df['Year'] == year_filter]
+    #else:
+        #filtered_df = df
     
     
-    st.title("Total Cost by Source")
-    fig3 = create_bubble_chart(filtered_df, 'Source', 'Cost (CAD)', 'Cost (CAD)', 'Source')
-    st.plotly_chart(fig3)
+    #st.title("Total Cost by Source")
+   # fig3 = create_bubble_chart(filtered_df, 'Source', 'Cost (CAD)', 'Cost (CAD)', 'Source')
+   # st.plotly_chart(fig3)
 
 
     
