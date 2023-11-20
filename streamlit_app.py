@@ -111,7 +111,7 @@ def create_bubble_chart(data, x_column, y_column, size_column, color_column):
     # Update layout for larger chart size and remove x-axis labels
     fig.update_layout(
         width=600,  # Set the width of the chart
-        height=500,  # Set the height of the chart
+        height=400,  # Set the height of the chart
         xaxis=dict(showticklabels=False)  # Hide x-axis labels
     )
 
