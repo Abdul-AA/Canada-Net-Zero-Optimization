@@ -8,15 +8,15 @@ nuc=9590000000.0*2
 
 def create_dataframe_updated():
         # Updated data as per the provided model results
-    data_2025 = {
-        'Year': [2025] * 8,
-        'Source': ['Wind', 'Solar', 'Oil', 'Nuclear', 'Hydro', 'Natural Gas', 'Coal & Coke', 'Biomass & Geothermal'],
-        'Generation (GWh)': [64389.48, 0.0, 1379.91, 78631.37, 402575.9, 45146.6549191651, 0.0, 8281.2],
-        'Emissions (MTCO2e)': [0.9658422, 0.0, 0.6761559, 0.94357644, 9.6618216, 22.121860910390897, 0.0, 0.3146856],
-        'Generation Cost (CAD)': [5204601668.4, 0.0, 85071451.5, 7002123498.5, 12133637626.0, 4391415123.987189, 0.0, 680714640.0],
-        'Capacity Investment Cost (CAD)': [0, 0, 0, 0, 0, 0, 0, 0]
-    }
-    
+    data_2025 =data_2025 = {
+            'Year': [2025] * 8,
+            'Source': ['Wind', 'Solar', 'Oil', 'Nuclear', 'Hydro', 'Natural Gas', 'Coal & Coke', 'Biomass & Geothermal'],
+            'Generation (GWh)': [64389.48, 11402.425080834817, 1379.91, 78631.37, 402575.9, 45146.6549191651, 0.0, 8281.2],
+            'Emissions (MTCO2e)': [0.9658422, 0.5074079160971493, 0.6761559, 0.94357644, 9.6618216, 22.121860910390897, 0.0, 0.3146856],
+            'Generation Cost (CAD)': [5204601668.4, 2343198354.111555, 85071451.5, 7002123498.5, 12133637626.0, 4391415123.987189, 0.0, 680714640.0],
+            'Capacity Investment Cost (CAD)': [0, 0, 0, 0, 0, 0, 0, 0]
+        }
+
     data_2030 = {
         'Year': [2030] * 8,
         'Source': ['Wind', 'Solar', 'Oil', 'Nuclear', 'Hydro', 'Natural Gas', 'Coal & Coke', 'Biomass & Geothermal'],
