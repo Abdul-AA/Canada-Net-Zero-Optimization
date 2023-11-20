@@ -112,7 +112,7 @@ def create_bubble_chart(data, x_column, y_column, size_column, color_column):
     fig.update_layout(
         width=600,  # Set the width of the chart
         height=400,  # Set the height of the chart
-        xaxis=dict(showticklabels=False)  # Hide x-axis labels
+        xaxis=dict(showticklabels=True)  # Hide x-axis labels
     )
 
     return fig
@@ -228,9 +228,10 @@ with tab3:
     else:
         filtered_df = df
     
+
     
     st.title("Emissions by Source")
-    fig1 = create_bubble_chart(filtered_df, 'Source', 'Emissions (MTCO2e)', 'Emissions (MTCO2e)', 'Source')
+    fig1 = create_bubble_chart(filtered_df, 'Cost (CAD)', 'Generation (GWh)', 'Emissions (MTCO2e)', 'Source')
     st.plotly_chart(fig1)
 with tab4:
     year_options = sorted(df['Year'].unique().tolist())
