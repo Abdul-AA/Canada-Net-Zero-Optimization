@@ -8,7 +8,7 @@ nuc=9590000000.0*2
 
 def create_dataframe_updated():
         # Updated data as per the provided model results
-    data_2025 =data_2025 = {
+    data_2025 = {
             'Year': [2025] * 8,
             'Source': ['Wind', 'Solar', 'Oil', 'Nuclear', 'Hydro', 'Natural Gas', 'Coal & Coke', 'Biomass & Geothermal'],
             'Generation (GWh)': [64389.48, 11402.425080834817, 1379.91, 78631.37, 402575.9, 45146.6549191651, 0.0, 8281.2],
