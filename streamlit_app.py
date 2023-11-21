@@ -50,8 +50,8 @@ def create_dataframe_updated():
 # Use the updated function to create the DataFrame
 df = create_dataframe_updated()
 df['Cost (CAD)']=df['Generation Cost (CAD)']+df['Capacity Investment Cost (CAD)']
-df['Emission Factor (MTCO2e)']=df['Generation (GWh)']/df['Emissions (MTCO2e)']
-df['Emission Factor (MTCO2e)'].fillna(0)
+#df['Emission Factor (MTCO2e)']=df['Generation (GWh)']/df['Emissions (MTCO2e)']
+#df2 = filtered_df.dropna(subset=['Emission Factor (MTCO2e)'])
 tab1, tab2,tab3 = st.tabs([" Optimal Allocations", "Capacity Decisions & Emissions", "Detailed Interactive Chart"])
 with tab1:
 # Dashboard title
@@ -233,7 +233,7 @@ with tab3:
 
     
     st.title("Contributions by Source")
-    fig1 = create_bubble_chart(filtered_df, 'Cost (CAD)', 'Generation (GWh)', 'Emission Factor (MTCO2e)', 'Source')
+    fig1 = create_bubble_chart(filtered_df, 'Cost (CAD)', 'Generation (GWh)', 'Emissions (MTCO2e)', 'Source')
     st.plotly_chart(fig1)
 #with tab4:
     #year_options = sorted(df['Year'].unique().tolist())
