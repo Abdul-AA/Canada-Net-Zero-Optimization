@@ -51,7 +51,7 @@ def create_dataframe_updated():
 df = create_dataframe_updated()
 df['Cost (CAD)']=df['Generation Cost (CAD)']+df['Capacity Investment Cost (CAD)']
 df['Emission Factor (MTCO2e)']=df['Generation (GWh)']/df['Emissions (MTCO2e)']
-
+df['Emission Factor (MTCO2e)'].fillna(0)
 tab1, tab2,tab3 = st.tabs([" Optimal Allocations", "Capacity Decisions & Emissions", "Detailed Interactive Chart"])
 with tab1:
 # Dashboard title
