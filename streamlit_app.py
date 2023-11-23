@@ -113,8 +113,8 @@ def create_bubble_chart(data, x_column, y_column, size_column, color_column):
 
     # Update layout for larger chart size and remove x-axis labels
     fig.update_layout(
-        width=500,  # Set the width of the chart
-        height=400,  # Set the height of the chart
+        width=800,  # Set the width of the chart
+        height=500,  # Set the height of the chart
         xaxis=dict(showticklabels=True),  # Hide x-axis labels
         title = 'Energy Portfolio, Cost, and Emission Factors'
     )
