@@ -116,6 +116,7 @@ def create_bubble_chart(data, x_column, y_column, size_column, color_column):
         width=500,  # Set the width of the chart
         height=400,  # Set the height of the chart
         xaxis=dict(showticklabels=True)  # Hide x-axis labels
+        title= 'Energy Portfolio, Cost, and Emission Factors'
     )
 
     return fig
