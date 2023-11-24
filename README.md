@@ -34,4 +34,8 @@ The following report details the formulation and implementation of these models,
 their implications, potential extensions, and lessons learned regarding both the potential and the practical
 limitations of linear optimization as a prescriptive analytics tool in complex and uncertain environments.
 
-View the full result at https://canada-net-zero.streamlit.app/
+Full report available at https://github.com/Abdul-AA/Canada-Net-Zero-Optimization/blob/92b090ca6f5cb3a39f29edd5514c2b1ab4688f8f/Optimization%20Report.pdf
+
+Full code notebook available at
+
+View the detailed result at https://canada-net-zero.streamlit.app/
