@@ -36,6 +36,6 @@ limitations of linear optimization as a prescriptive analytics tool in complex a
 
 Full report available at https://github.com/Abdul-AA/Canada-Net-Zero-Optimization/blob/92b090ca6f5cb3a39f29edd5514c2b1ab4688f8f/Optimization%20Report.pdf
 
-Full code notebook available at
+Full code notebook available at https://github.com/Abdul-AA/Canada-Net-Zero-Optimization/blob/e2f1826674320e892b1282befc84edae0425810d/Canada-Net-Zero%202.ipynb
 
 View the detailed result at https://canada-net-zero.streamlit.app/
