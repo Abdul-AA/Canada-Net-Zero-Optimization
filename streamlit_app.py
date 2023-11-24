@@ -281,10 +281,11 @@ with col2:
     st.markdown(
         """
         For more details, check out our [Emissions Optimization Model on GitHub](
-        https://github.com/Abdul-AA/Canada-Net-Zero-Optimization/blob/ab3119a7f5e75549d755cf47834c20b60925d91d/Emissions%20Optimization%20Model.ipynb).
+        https://github.com/Abdul-AA/Canada-Net-Zero-Optimization/blob/e81573126faae5f8e26e8dc7ac2df36770eaeed1/Canada-Net-Zero%202.ipynb).
         """
     )
-
+check out the full report [here](
+        https://github.com/Abdul-AA/Canada-Net-Zero-Optimization/blob/e81573126faae5f8e26e8dc7ac2df36770eaeed1/Optimization.pdf).
 
 # Run the Streamlit app (uncomment this line if running the script directly)
 # st.run()
