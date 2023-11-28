@@ -1,8 +1,11 @@
 # Canada-Net-Zero-Optimization
 
-## Tools 
+## Tools and Methods
 - Python
 - Gurobi
+- Mixed Integer programming
+- Goal programming
+
 
 ## Context
 Developing climate resilience is one of the most pressing mandates for the global community in the face
