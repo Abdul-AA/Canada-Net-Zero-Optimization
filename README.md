@@ -28,6 +28,13 @@ broader feasibility of emissions, energy generation, energy capacity, and capita
 time period and subject to the same reliability mandates.
 
 ## Results
+### Optimal Energy Mix in 2025
+![2025] (https://github.com/Abdul-AA/Canada-Net-Zero-Optimization/blob/3b65bafcb3de295e2c3cc5b38d0193cf35e80909/2025.png)
+### Optimal Energy Mix in 2030
+![2030] (https://github.com/Abdul-AA/Canada-Net-Zero-Optimization/blob/3b65bafcb3de295e2c3cc5b38d0193cf35e80909/2030.png)
+
+### Optimal Energy Mix in 2035
+![2035] (https://github.com/Abdul-AA/Canada-Net-Zero-Optimization/blob/3b65bafcb3de295e2c3cc5b38d0193cf35e80909/2035.png)
 
 
 
