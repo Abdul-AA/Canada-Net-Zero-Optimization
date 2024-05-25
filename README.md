@@ -27,15 +27,9 @@ as minimizing costs and ensuring reliable energy supply. Through the GP formulat
 broader feasibility of emissions, energy generation, energy capacity, and capital cost goals over the same
 time period and subject to the same reliability mandates.
 
-Our team chose to centre our project on this problem due to its inherent complexity and the critical
-role that untangling such problems plays in contemporary environmental and energy debates. Getting
-Canada’s electricity sector to zero emissions by 2035 presents a multifaceted dilemma balancing environmental,
-economic, and social factors. Problems like this elude straightforward understanding and greatly
-benefit from methods like data modeling for conceptualization. The resulting artifacts can be powerful
-tools for building shared understanding, and ideally, collective action.
-The following report details the formulation and implementation of these models, their results and
-their implications, potential extensions, and lessons learned regarding both the potential and the practical
-limitations of linear optimization as a prescriptive analytics tool in complex and uncertain environments.
+## Results
+
+
 
 [Full report](https://github.com/Abdul-AA/Canada-Net-Zero-Optimization/blob/cc06ab7934bf71219d516aab8a7c509221d1cca3/Optimization.pdf)
 
