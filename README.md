@@ -1,10 +1,6 @@
 # Canada-Net-Zero-Optimization
 
-## Tools and Methods
-- Python
-- Gurobi
-- Mixed Integer programming
-- Goal programming
+
 
 
 ## Context
@@ -14,6 +10,7 @@ greenhouse gas emissions by 2050, and to reducing its emissions by 40-45% from 2
 These ambitious targets require significant transformations in various sectors of the economy, one of
 which is the electricity sector – the focus of this project.
 
+## The Optimization Model
 Building on the work of the Canada Energy Regulator (CER), we sought to develop our own models
 to examine the implications of Canada’s commitments for its electricity sector. This is done firstly
 using a base model with a multi-objective mixed integer programming (MIP) approach, then through
@@ -32,14 +29,11 @@ time period and subject to the same reliability mandates.
 ![2025](https://github.com/Abdul-AA/Canada-Net-Zero-Optimization/blob/3b65bafcb3de295e2c3cc5b38d0193cf35e80909/2025.png)
 ### Optimal Energy Mix in 2030
 ![2030](https://github.com/Abdul-AA/Canada-Net-Zero-Optimization/blob/3b65bafcb3de295e2c3cc5b38d0193cf35e80909/2030.png)
-
 ### Optimal Energy Mix in 2035
 ![2035](https://github.com/Abdul-AA/Canada-Net-Zero-Optimization/blob/3b65bafcb3de295e2c3cc5b38d0193cf35e80909/2035.png)
 
 
 
-[Full report](https://github.com/Abdul-AA/Canada-Net-Zero-Optimization/blob/cc06ab7934bf71219d516aab8a7c509221d1cca3/Optimization.pdf)
 
-[Full code notebook](https://github.com/Abdul-AA/Canada-Net-Zero-Optimization/blob/08753f6c4f4fa6fc71da2bd8f59e847d0e48a19c/Canada-Net-Zero.ipynb)
 
 [View the detailed result](https://canada-net-zero.streamlit.app/)
