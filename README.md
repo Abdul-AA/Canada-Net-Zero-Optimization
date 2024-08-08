@@ -34,6 +34,6 @@ time period and subject to the same reliability mandates.
 
 
 
-
+Full report including the objective functions, decision variables, and constraints can be found [here](https://github.com/Abdul-AA/Canada-Net-Zero-Optimization/blob/f3542db256244222a213fa306179545a00c81f2d/Optimization.pdf)
 
 [View the detailed result](https://canada-net-zero.streamlit.app/)
